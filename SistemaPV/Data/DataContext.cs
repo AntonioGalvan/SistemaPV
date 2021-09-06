@@ -8,8 +8,13 @@ using System.Threading.Tasks;
 
 namespace SistemaPV.Data
 {
-    public class DataContext : IdentityDbContext<User>
+    public class DataContext : IdentityDbContext<CUser>
     {
+        DbSet<CUser> Users { get; set; }
+        DbSet<CCategory> Categories { get; set; }
+        DbSet<CProduct> Products { get; set; }
+        DbSet<CBrand> Brands { get; set; }
+        DbSet<CSale> Sales { get; set; }
         //Contexto de datos
         public DataContext(DbContextOptions<DataContext> options) : base(options)
 

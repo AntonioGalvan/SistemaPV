@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace SistemaPV.Data.Entities
 {
-    public class User : IdentityUser
+    public class CUser : IdentityUser
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "{0} es obligatorio.")]
 
         [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
@@ -25,12 +27,11 @@ namespace SistemaPV.Data.Entities
 
         public string LastName { get; set; }
 
-        [Display(Name = "Teléfono")]
+        public string User { get; set; }
 
-        public override string PhoneNumber { get; set; }
+        public string Password { get; set; }
 
-        [Display(Name = "Nombre")]
+        public string Job { get; set; }
 
-        public string FullName => $"{LastName} {FirstName}";
     }
 }
