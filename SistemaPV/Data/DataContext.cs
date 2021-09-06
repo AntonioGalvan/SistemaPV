@@ -10,6 +10,7 @@ namespace SistemaPV.Data
 {
     public class DataContext : IdentityDbContext<User>
     {
+        //Contexto de datos
         public DataContext(DbContextOptions<DataContext> options) : base(options)
 
         {
