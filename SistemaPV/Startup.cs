@@ -43,6 +43,8 @@ namespace SistemaPV
 
                 cfg.Password.RequireUppercase = false;
 
+                cfg.Password.RequiredLength = 10;
+
             })
             .AddEntityFrameworkStores<DataContext>();
             services.AddDbContext<DataContext>(
