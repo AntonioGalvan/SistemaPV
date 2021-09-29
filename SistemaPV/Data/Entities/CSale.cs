@@ -14,5 +14,8 @@ namespace SistemaPV.Data.Entities
         public DateTime DateTime { get; set; }
         public int UserId { get; set; }
         public int SaleDetailId { get; set; }
+
+        public CUser User { get; set; }
+        public ICollection<CSaleDetail> SaleDetails { get; set; }
     }
 }
