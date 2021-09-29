@@ -9,26 +9,19 @@ namespace SistemaPV.Data.Entities
 {
     public class CUser : IdentityUser
     {
-
         [Required(ErrorMessage = "{0} es obligatorio.")]
-
         [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
-
         [Display(Name = "Nombre")]
-
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "{0} es obligatorio.")]
-
         [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres.")]
-
         [Display(Name = "Apellidos")]
-
         public string LastName { get; set; }
 
-        public string User { get; set; }
+        public string FullName { get; }
 
-        public string Password { get; set; }
+        public string User { get; set; }
 
         public string Job { get; set; }
 

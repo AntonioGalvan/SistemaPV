@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SistemaPV.Data.Entities
 {
-    public class CSale
+    public class CSale:IEntity
     {
         public int Id { get; set; }
         public string Description { get; set; }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SistemaPV.Data.Entities
 {
-    public class CBrand
+    public class CBrand:IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
