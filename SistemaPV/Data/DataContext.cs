@@ -18,7 +18,6 @@ namespace SistemaPV.Data
 
         //Contexto de datos
         public DataContext(DbContextOptions<DataContext> options) : base(options)
-
         {
 
         }

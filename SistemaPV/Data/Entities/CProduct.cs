@@ -20,6 +20,6 @@ namespace SistemaPV.Data.Entities
         public CBrand Brand { get; set; }
         public CUser User { get; set; }
         public CCategory Category { get; set; }
-        public ICollection<CSaleDetail> SaleDetails { get; set; }
+        public CSaleDetail SaleDetail { get; set; }
     }
 }
