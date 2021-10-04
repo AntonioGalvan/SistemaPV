@@ -27,11 +27,11 @@
         public string ImageUrl { get; set; }
 
         [Required(ErrorMessage = "El {0} es requerido.")]
-        [Display(Name = "Id Marca")]
+        [Display(Name = "Marca")]
         public int BrandId { get; set; }
 
         [Required(ErrorMessage = "El {0} es requerido.")]
-        [Display(Name = "Id Categoría")]
+        [Display(Name = "Categoría")]
         public int CategoryId { get; set; }
 
         [Required(ErrorMessage = "El {0} es requerido.")]

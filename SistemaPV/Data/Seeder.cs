@@ -39,15 +39,15 @@ namespace SistemaPV.Data
 
             if (!this.dataContext.Users.Any())
             {
-                await CheckSalesman("Godofredo");
+                //await CheckSalesman("Godofredo");
             }
         }
 
-        private async Task CheckSalesman(string name)
-        {
-            this.dataContext.Users.Add(new CSalesman { Name = name });
-            await this.dataContext.SaveChangesAsync();
-        }
+        //private async Task CheckSalesman(string name)
+        //{
+        //    this.dataContext.Users.Add(new CSalesman { Name = name });
+        //    await this.dataContext.SaveChangesAsync();
+        //}
 
         private async Task CheckCategory(string name)
         {
