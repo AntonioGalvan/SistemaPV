@@ -8,10 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SistemaPV.Data;
 using SistemaPV.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using SistemaPV.Helpers;
 
 namespace SistemaPV
 {
@@ -52,6 +49,8 @@ namespace SistemaPV
                 {
                     cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 });
+            services.AddTransient<Seeder>();
+            services.AddScoped<IUserHelper,UserHelper>();
             services.AddControllersWithViews();
         }
 
