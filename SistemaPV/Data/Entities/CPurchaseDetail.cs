@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace SistemaPV.Data.Entities
+﻿namespace SistemaPV.Data.Entities
 {
-    public class CSaleDetail:IEntity
+    using System.ComponentModel.DataAnnotations;
+
+    public class CPurchaseDetail
     {
         [Display(Name = "Id")]
         public int Id { get; set; }

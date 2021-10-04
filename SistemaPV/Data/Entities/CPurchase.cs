@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SistemaPV.Data.Entities
+﻿namespace SistemaPV.Data.Entities
 {
-    public class CSale:IEntity
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    public class CPurchase
     {
         [Display(Name = "Id")]
         public int Id { get; set; }
@@ -25,7 +23,7 @@ namespace SistemaPV.Data.Entities
         public double Change { get; set; }
 
         [Required(ErrorMessage = "El {0} es requerido.")]
-        [DisplayFormat(DataFormatString="{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         [Display(Name = "Fecha y Hora")]
         public DateTime DateTime { get; set; }
 
