@@ -11,8 +11,7 @@ namespace SistemaPV.Data.Entities
         [Display(Name = "Total")]
         public double Total { get; set; }
 
-        public CProduct Product { get; set; }
-
+        public ICollection<CProduct> Products { get; set; }
         public CSale Sales { get; set; }
     }
 }
