@@ -11,6 +11,13 @@
     --z-fixed: 100
 }
 
+
+
+main {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
 *,
 ::before,
 ::after {
@@ -158,13 +165,26 @@ td a {
     color: dimgray;
     margin-left: 10px;
     font-size: 1.2rem;
-    padding: 10px;
-    border-radius: 40%;
+    padding: 5px;
+    border-radius: 50%;
+    display: inline-block;
     width: 43px;
     height: 43px;
     align-items: center;
     justify-content: center;
 }
+
+    td a i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+    }
+
+    td a:target{
+        text-decoration:none;
+    }
 
 @media screen and (min-width: 768px) {
     body {

@@ -3,6 +3,85 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Bienvenido</h1>
 </div>
+
+<main class="mt-2 pt-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Dashboard</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <div class="card bg-primary border-0 text-white h-100">
+                    <div class="card-body py-5">Ventas</div>
+                    <div class="card-footer d-flex">
+                        Ver detalles
+                        <span class="ms-auto">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card bg-warning border-0 text-dark h-100">
+                    <div class="card-body py-5">Falta de mercancía</div>
+                    <div class="card-footer d-flex">
+                        Ver detalles
+                        <span class="ms-auto">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card bg-success border-0 text-white h-100">
+                    <div class="card-body py-5">Mejores artículos</div>
+                    <div class="card-footer d-flex">
+                        Ver detalles
+                        <span class="ms-auto">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card bg-danger border-0 text-white h-100">
+                    <div class="card-body py-5">Avisos</div>
+                    <div class="card-footer d-flex">
+                        Ver detalles
+                        <span class="ms-auto">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
+                        Ventas
+                    </div>
+                    <div class="card-body">
+                        <canvas class="chart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <span class="me-2"><i class="bi bi-bar-chart-fill"></i></span>
+                        Productos más vendidos
+                    </div>
+                    <div class="card-body">
+                        <canvas class="chart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
