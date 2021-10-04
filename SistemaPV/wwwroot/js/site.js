@@ -27,6 +27,21 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
 
+    var menu = document.getElementById("hamburguesa");
+    menu.addEventListener("click", girar);
+    var girado = false;
+
+    function girar() {
+        if (girado) {
+            menu.style.transform = "rotate(0deg)";
+            girado = false;
+        }
+        else {
+            menu.style.transform = "rotate(180deg)";
+            girado = true;
+        }
+    }
+
     /*===== LINK ACTIVE =====*/
 
     // Your code to run since DOM is loaded and ready
