@@ -22,7 +22,7 @@ namespace SistemaPV.Controllers
         // GET: CSalesmen
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CSalesman.ToListAsync());
+            return View(await _context.Salesmen.ToListAsync());
         }
 
         // GET: CSalesmen/Details/5
@@ -33,7 +33,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cSalesman = await _context.CSalesman
+            var cSalesman = await _context.Salesmen
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cSalesman == null)
             {
@@ -73,7 +73,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cSalesman = await _context.CSalesman.FindAsync(id);
+            var cSalesman = await _context.Salesmen.FindAsync(id);
             if (cSalesman == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cSalesman = await _context.CSalesman
+            var cSalesman = await _context.Salesmen
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cSalesman == null)
             {
@@ -139,15 +139,15 @@ namespace SistemaPV.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cSalesman = await _context.CSalesman.FindAsync(id);
-            _context.CSalesman.Remove(cSalesman);
+            var cSalesman = await _context.Salesmen.FindAsync(id);
+            _context.Salesmen.Remove(cSalesman);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CSalesmanExists(int id)
         {
-            return _context.CSalesman.Any(e => e.Id == id);
+            return _context.Salesmen.Any(e => e.Id == id);
         }
     }
 }

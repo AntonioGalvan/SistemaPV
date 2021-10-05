@@ -10,11 +10,16 @@ namespace SistemaPV.Data
 {
     public class DataContext : IdentityDbContext<CUser>
     {
+        public DbSet<CAdmin> Admins { get; set; }
         public DbSet<CCategory> Categories { get; set; }
         public DbSet<CProduct> Products { get; set; }
         public DbSet<CBrand> Brands { get; set; }
         public DbSet<CSale> Sales { get; set; }
         public DbSet<CSaleDetail> SaleDetails { get; set; }
+        public DbSet<CSalesman> Salesmen { get; set; }
+        public DbSet<CPurchaseDetail> PurchaseDetails { get; set; }
+        public DbSet<CPurchase> Purchases { get; set; }
+        public DbSet<CManager> Managers { get; set; }
 
         //Contexto de datos
         public DataContext(DbContextOptions<DataContext> options) : base(options)
@@ -22,16 +27,6 @@ namespace SistemaPV.Data
 
         }
 
-        //Contexto de datos
-        public DbSet<SistemaPV.Data.Entities.CSalesman> CSalesman { get; set; }
 
-        //Contexto de datos
-        public DbSet<SistemaPV.Data.Entities.CPurchaseDetail> CPurchaseDetail { get; set; }
-
-        //Contexto de datos
-        public DbSet<SistemaPV.Data.Entities.CPurchase> CPurchase { get; set; }
-
-        //Contexto de datos
-        public DbSet<SistemaPV.Data.Entities.CManager> CManager { get; set; }
     }
 }

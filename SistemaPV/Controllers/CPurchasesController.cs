@@ -22,7 +22,7 @@ namespace SistemaPV.Controllers
         // GET: CPurchases
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CPurchase.ToListAsync());
+            return View(await _context.Purchases.ToListAsync());
         }
 
         // GET: CPurchases/Details/5
@@ -33,7 +33,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cPurchase = await _context.CPurchase
+            var cPurchase = await _context.Purchases
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cPurchase == null)
             {
@@ -73,7 +73,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cPurchase = await _context.CPurchase.FindAsync(id);
+            var cPurchase = await _context.Purchases.FindAsync(id);
             if (cPurchase == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cPurchase = await _context.CPurchase
+            var cPurchase = await _context.Purchases
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cPurchase == null)
             {
@@ -139,15 +139,15 @@ namespace SistemaPV.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cPurchase = await _context.CPurchase.FindAsync(id);
-            _context.CPurchase.Remove(cPurchase);
+            var cPurchase = await _context.Purchases.FindAsync(id);
+            _context.Purchases.Remove(cPurchase);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CPurchaseExists(int id)
         {
-            return _context.CPurchase.Any(e => e.Id == id);
+            return _context.Purchases.Any(e => e.Id == id);
         }
     }
 }

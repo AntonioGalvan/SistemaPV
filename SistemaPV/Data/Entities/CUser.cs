@@ -22,10 +22,5 @@ namespace SistemaPV.Data.Entities
         [Display(Name = "Nombre Completo")]
         public string FullName { get { return FirstName + " " + LastName; } }
 
-
-        public string User { get; set; }
-
-        public string Job { get; set; }
-
     }
 }

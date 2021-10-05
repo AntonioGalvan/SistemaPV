@@ -22,7 +22,7 @@ namespace SistemaPV.Controllers
         // GET: CManagers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CManager.ToListAsync());
+            return View(await _context.Managers.ToListAsync());
         }
 
         // GET: CManagers/Details/5
@@ -33,7 +33,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cManager = await _context.CManager
+            var cManager = await _context.Managers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cManager == null)
             {
@@ -54,7 +54,7 @@ namespace SistemaPV.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Area")] CManager cManager)
+        public async Task<IActionResult> Create( CManager cManager)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cManager = await _context.CManager.FindAsync(id);
+            var cManager = await _context.Managers.FindAsync(id);
             if (cManager == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace SistemaPV.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Area")] CManager cManager)
+        public async Task<IActionResult> Edit(int id, CManager cManager)
         {
             if (id != cManager.Id)
             {
@@ -124,7 +124,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cManager = await _context.CManager
+            var cManager = await _context.Managers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cManager == null)
             {
@@ -139,15 +139,15 @@ namespace SistemaPV.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cManager = await _context.CManager.FindAsync(id);
-            _context.CManager.Remove(cManager);
+            var cManager = await _context.Managers.FindAsync(id);
+            _context.Managers.Remove(cManager);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CManagerExists(int id)
         {
-            return _context.CManager.Any(e => e.Id == id);
+            return _context.Managers.Any(e => e.Id == id);
         }
     }
 }

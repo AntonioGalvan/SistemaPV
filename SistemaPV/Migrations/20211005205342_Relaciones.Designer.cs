@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaPV.Data;
 
 namespace SistemaPV.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211005205342_Relaciones")]
+    partial class Relaciones
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,23 +152,6 @@ namespace SistemaPV.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SistemaPV.Data.Entities.CAdmin", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CUserId");
-
-                    b.ToTable("Admins");
-                });
-
             modelBuilder.Entity("SistemaPV.Data.Entities.CBrand", b =>
                 {
                     b.Property<int>("Id")
@@ -220,7 +205,7 @@ namespace SistemaPV.Migrations
 
                     b.HasIndex("CUserId");
 
-                    b.ToTable("Managers");
+                    b.ToTable("CManager");
                 });
 
             modelBuilder.Entity("SistemaPV.Data.Entities.CProduct", b =>
@@ -294,7 +279,7 @@ namespace SistemaPV.Migrations
 
                     b.HasIndex("ManagerId");
 
-                    b.ToTable("Purchases");
+                    b.ToTable("CPurchase");
                 });
 
             modelBuilder.Entity("SistemaPV.Data.Entities.CPurchaseDetail", b =>
@@ -319,7 +304,7 @@ namespace SistemaPV.Migrations
 
                     b.HasIndex("PurchaseId");
 
-                    b.ToTable("PurchaseDetails");
+                    b.ToTable("CPurchaseDetail");
                 });
 
             modelBuilder.Entity("SistemaPV.Data.Entities.CSale", b =>
@@ -403,7 +388,7 @@ namespace SistemaPV.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Salesmen");
+                    b.ToTable("CSalesman");
                 });
 
             modelBuilder.Entity("SistemaPV.Data.Entities.CUser", b =>
@@ -429,6 +414,9 @@ namespace SistemaPV.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
+
+                    b.Property<string>("Job")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -463,6 +451,9 @@ namespace SistemaPV.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("User")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(256)")
@@ -530,13 +521,6 @@ namespace SistemaPV.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SistemaPV.Data.Entities.CAdmin", b =>
-                {
-                    b.HasOne("SistemaPV.Data.Entities.CUser", "CUser")
-                        .WithMany()
-                        .HasForeignKey("CUserId");
                 });
 
             modelBuilder.Entity("SistemaPV.Data.Entities.CManager", b =>

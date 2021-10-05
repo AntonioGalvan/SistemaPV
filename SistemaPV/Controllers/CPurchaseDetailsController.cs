@@ -22,7 +22,7 @@ namespace SistemaPV.Controllers
         // GET: CPurchaseDetails
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CPurchaseDetail.ToListAsync());
+            return View(await _context.PurchaseDetails.ToListAsync());
         }
 
         // GET: CPurchaseDetails/Details/5
@@ -33,7 +33,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cPurchaseDetail = await _context.CPurchaseDetail
+            var cPurchaseDetail = await _context.PurchaseDetails
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cPurchaseDetail == null)
             {
@@ -73,7 +73,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cPurchaseDetail = await _context.CPurchaseDetail.FindAsync(id);
+            var cPurchaseDetail = await _context.PurchaseDetails.FindAsync(id);
             if (cPurchaseDetail == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cPurchaseDetail = await _context.CPurchaseDetail
+            var cPurchaseDetail = await _context.PurchaseDetails
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cPurchaseDetail == null)
             {
@@ -139,15 +139,15 @@ namespace SistemaPV.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cPurchaseDetail = await _context.CPurchaseDetail.FindAsync(id);
-            _context.CPurchaseDetail.Remove(cPurchaseDetail);
+            var cPurchaseDetail = await _context.PurchaseDetails.FindAsync(id);
+            _context.PurchaseDetails.Remove(cPurchaseDetail);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CPurchaseDetailExists(int id)
         {
-            return _context.CPurchaseDetail.Any(e => e.Id == id);
+            return _context.PurchaseDetails.Any(e => e.Id == id);
         }
     }
 }
