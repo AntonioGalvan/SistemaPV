@@ -24,5 +24,14 @@ namespace SistemaPV.Data
 
         //Contexto de datos
         public DbSet<SistemaPV.Data.Entities.CSalesman> CSalesman { get; set; }
+
+        //Contexto de datos
+        public DbSet<SistemaPV.Data.Entities.CPurchaseDetail> CPurchaseDetail { get; set; }
+
+        //Contexto de datos
+        public DbSet<SistemaPV.Data.Entities.CPurchase> CPurchase { get; set; }
+
+        //Contexto de datos
+        public DbSet<SistemaPV.Data.Entities.CManager> CManager { get; set; }
     }
 }
