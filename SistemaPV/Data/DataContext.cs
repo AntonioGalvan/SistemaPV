@@ -21,5 +21,8 @@ namespace SistemaPV.Data
         {
 
         }
+
+        //Contexto de datos
+        public DbSet<SistemaPV.Data.Entities.CSalesman> CSalesman { get; set; }
     }
 }

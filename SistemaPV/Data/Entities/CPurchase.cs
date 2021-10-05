@@ -14,6 +14,6 @@ namespace SistemaPV.Data.Entities
         public DateTime DateTime { get; set; }
 
         public CManager Manager { get; set; }
-        public CPurchaseDetail PurchaseDetails { get; set; }
+        public ICollection<CPurchaseDetail> PurchaseDetails { get; set; }
     }
 }
