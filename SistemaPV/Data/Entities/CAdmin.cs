@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SistemaPV.Data.Entities
 {
-    public class CAdmin
+    public class CAdmin:IEntity
     {
         public int Id { get; set; }
 

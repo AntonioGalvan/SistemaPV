@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 
 namespace SistemaPV.Data.Entities
 {
-    public class CSalesman:IEntity
+    public class CPurchaseDetail:IEntity
     {
         public int Id { get; set; }
-        public string Area { get; set; }
+        public double Total { get; set; }
 
-        public CUser User { get; set; }
-        public ICollection<CSale> Sales { get; set; }
-
+        public CPurchase Purchase { get; set; }
+        public CProduct Product { get; set; }
     }
 }

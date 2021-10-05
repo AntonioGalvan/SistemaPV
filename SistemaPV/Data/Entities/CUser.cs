@@ -27,8 +27,9 @@ namespace SistemaPV.Data.Entities
 
         public string Job { get; set; }
 
-        public ICollection<CProduct> Products { get; set; }
-        public ICollection<CSale> Sales { get;set; }
+        public CSalesman Salesman { get; set; }
+        public CManager Manager { get; set; }
+        public CAdmin Admin { get; set; }
 
     }
 }

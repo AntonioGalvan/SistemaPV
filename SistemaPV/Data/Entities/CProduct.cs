@@ -1,6 +1,7 @@
 ﻿namespace SistemaPV.Data.Entities
 {
     using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
     public class CProduct:IEntity
     {
         [Display(Name = "Id")]
@@ -40,8 +41,8 @@
 
         //Objeto-Propiedad
         public CBrand Brand { get; set; }
-        public CUser User { get; set; }
         public CCategory Category { get; set; }
-        public CSaleDetail SaleDetail { get; set; }
+        public ICollection<CSaleDetail> SaleDetails { get; set; }
+        public ICollection<CPurchaseDetail> PurchaseDetails { get; set; }
     }
 }

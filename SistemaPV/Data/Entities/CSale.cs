@@ -38,7 +38,7 @@ namespace SistemaPV.Data.Entities
         public int SaleDetailId { get; set; }
 
 
-        public CUser User { get; set; }
-        public CSaleDetail SaleDetail { get; set; }
+        public CSalesman Salesman { get; set; }
+        public ICollection<CSaleDetail> SaleDetails { get; set; }
     }
 }
