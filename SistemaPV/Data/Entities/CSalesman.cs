@@ -11,7 +11,6 @@ namespace SistemaPV.Data.Entities
         [Display(Name = "Id")]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "El {0} es requerido.")]
         [MaxLength(20, ErrorMessage = "Debe introducir un máximo de {1} caracteres.")]
         [Display(Name = "Área")]
         public string Area { get; set; }

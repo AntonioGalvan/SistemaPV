@@ -19,8 +19,8 @@ namespace SistemaPV.Data.Entities
         [Display(Name = "Apellidos")]
         public string LastName { get; set; }
 
-        [Display(Name = "Nombre Completo")]
-        public string FullName { get { return FirstName + " " + LastName; } }
+        [Display(Name = "Nombre completo")]
+        public string FullName => $"{LastName} {FirstName}";
 
     }
 }
