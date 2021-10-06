@@ -22,7 +22,7 @@ namespace SistemaPV.Controllers
         // GET: CSalesmen
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Salesmen.ToListAsync());
+            return View(await _context.Salesmen.Include(s => s.User).ToListAsync());
         }
 
         // GET: CSalesmen/Details/5
