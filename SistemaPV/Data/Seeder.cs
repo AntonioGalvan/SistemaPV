@@ -60,6 +60,28 @@
                 user = await CheckUser("Bernardo", "Pitts", "brads.pitt@gmail.com", "123456345345345", "Librería");
                 await CheckManager(user, "Manager");
             }
+            if (!this.dataContext.Products.Any())
+            {
+                await CheckProduct("iPhone", "Es un iphone", 10, 120000, "", 5, 4);
+                await CheckProduct("Surface", "Touch", 12, 17000, "", 2, 3);
+                await CheckProduct("Refrigerador", "Grande", 15, 27000, "", 1, 2);
+            }
+        }
+
+        private async Task CheckProduct(string name, string description, int quantity, double price,string img, int brandid, int categoryid)
+        {
+            var product = new CProduct
+            {
+                Name = name,
+                Description = description,
+                Quantity = quantity,
+                Price = price,
+                ImageUrl = img,
+                BrandId = brandid,
+                CategoryId = categoryid
+            };
+            this.dataContext.Products.Add(product);
+            await this.dataContext.SaveChangesAsync();
         }
 
         private async Task CheckSalesmen(CUser user, string rol)
@@ -71,7 +93,7 @@
 
         private async Task CheckManager(CUser user, string rol)
         {
-            this.dataContext.Salesmen.Add(new CSalesman { User = user });
+            this.dataContext.Managers.Add(new CManager { CUser = user });
             await this.dataContext.SaveChangesAsync();
             await userHelper.AddUserToRoleAsync(user, rol);
         }
