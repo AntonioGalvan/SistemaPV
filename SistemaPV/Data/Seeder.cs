@@ -22,6 +22,7 @@
         {
             await dataContext.Database.EnsureCreatedAsync();
             await userHelper.CheckRoleAsync("Salesman");
+            await userHelper.CheckRoleAsync("Manager");
 
             if (!this.dataContext.Brands.Any())
             {
@@ -42,16 +43,33 @@
             }
             if (!this.dataContext.Salesmen.Any())
             {
-                var user = await CheckUser("Charly", "Doe", "charly.doe@gmail.com", "1234565345345");
+                var user = await CheckUser("Charly", "Doe", "charly.doe@gmail.com", "1234565345345", "Perfumería");
                 await CheckSalesmen(user, "Salesman");
-                user = await CheckUser("Angelina", "Jolie", "angelina.jolie@gmail.com", "12345634543543");
+                user = await CheckUser("Angelina", "Jolie", "angelina.jolie@gmail.com", "12345634543543", "Electrónicos");
                 await CheckSalesmen(user, "Salesman");
-                user = await CheckUser("Brad", "Pitt", "brad.pitt@gmail.com", "123456345345345");
+                user = await CheckUser("Brad", "Pitt", "brad.pitt@gmail.com", "123456345345345", "Librería");
                 await CheckSalesmen(user, "Salesman");
+            }
+
+            if (!this.dataContext.Managers.Any())
+            {
+                var user = await CheckUser("Carlangas", "Does", "charlys.doe@gmail.com", "1234565345345", "Perfumería");
+                await CheckManager(user, "Manager");
+                user = await CheckUser("Angélica", "Jolies", "angelinas.jolie@gmail.com", "12345634543543", "Electrónicos");
+                await CheckManager(user, "Manager");
+                user = await CheckUser("Bernardo", "Pitts", "brads.pitt@gmail.com", "123456345345345", "Librería");
+                await CheckManager(user, "Manager");
             }
         }
 
         private async Task CheckSalesmen(CUser user, string rol)
+        {
+            this.dataContext.Salesmen.Add(new CSalesman { User = user });
+            await this.dataContext.SaveChangesAsync();
+            await userHelper.AddUserToRoleAsync(user, rol);
+        }
+
+        private async Task CheckManager(CUser user, string rol)
         {
             this.dataContext.Salesmen.Add(new CSalesman { User = user });
             await this.dataContext.SaveChangesAsync();
@@ -70,7 +88,7 @@
             await this.dataContext.SaveChangesAsync();
         }
 
-        private async Task<CUser> CheckUser(string firstName, string lastName, string email, string password)
+        private async Task<CUser> CheckUser(string firstName, string lastName, string email, string password, string area)
         {
             var user = await userHelper.GetUserByEmailAsync(email);
             if (user == null)
@@ -80,7 +98,8 @@
                     FirstName = firstName,
                     LastName = lastName,
                     Email = email,
-                    UserName = email
+                    UserName = email,
+                    Area = area
                 };
                 var result = await userHelper.AddUserAsync(user, password);
                 if (result != IdentityResult.Success)

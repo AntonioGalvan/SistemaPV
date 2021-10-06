@@ -22,5 +22,8 @@ namespace SistemaPV.Data.Entities
         [Display(Name = "Nombre completo")]
         public string FullName => $"{LastName} {FirstName}";
 
+        [Display(Name = "Área")]
+        public string Area { get; set; }
+
     }
 }

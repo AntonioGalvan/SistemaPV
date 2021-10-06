@@ -10,7 +10,6 @@ namespace SistemaPV.Data
 {
     public class DataContext : IdentityDbContext<CUser>
     {
-        public DbSet<CAdmin> Admins { get; set; }
         public DbSet<CCategory> Categories { get; set; }
         public DbSet<CProduct> Products { get; set; }
         public DbSet<CBrand> Brands { get; set; }

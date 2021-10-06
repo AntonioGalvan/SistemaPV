@@ -54,7 +54,7 @@ namespace SistemaPV.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( CManager cManager)
+        public async Task<IActionResult> Create(CManager cManager)
         {
             if (ModelState.IsValid)
             {

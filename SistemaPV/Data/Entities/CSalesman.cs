@@ -11,10 +11,6 @@ namespace SistemaPV.Data.Entities
         [Display(Name = "Id")]
         public int Id { get; set; }
 
-        [MaxLength(20, ErrorMessage = "Debe introducir un máximo de {1} caracteres.")]
-        [Display(Name = "Área")]
-        public string Area { get; set; }
-
         public CUser User { get; set; }
         public ICollection<CSale> Sales { get; set; }
 
