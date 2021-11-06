@@ -76,9 +76,7 @@
                 Description = description,
                 Quantity = quantity,
                 Price = price,
-                ImageUrl = img,
-                BrandId = brandid,
-                CategoryId = categoryid
+                ImageUrl = img
             };
             this.dataContext.Products.Add(product);
             await this.dataContext.SaveChangesAsync();

@@ -51,6 +51,7 @@ namespace SistemaPV
                 });
             services.AddTransient<Seeder>();
             services.AddScoped<IUserHelper,UserHelper>();
+            services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddControllersWithViews();
         }
 

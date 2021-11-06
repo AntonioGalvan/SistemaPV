@@ -9,7 +9,7 @@
 
         [Required(ErrorMessage = "El {0} es requerido.")]
         [MaxLength(20, ErrorMessage = "Debe introducir un máximo de {1} caracteres.")]
-        [Display(Name = "Nombre")]
+        [Display(Name = "Producto")]
         public string Name { get; set; }
 
         [MaxLength(100, ErrorMessage = "Debe introducir un máximo de {1} caracteres.")]
@@ -28,19 +28,13 @@
         public string ImageUrl { get; set; }
 
         [Required(ErrorMessage = "El {0} es requerido.")]
-        [Display(Name = "Marca")]
-        public int BrandId { get; set; }
-
-        [Required(ErrorMessage = "El {0} es requerido.")]
-        [Display(Name = "Categoría")]
-        public int CategoryId { get; set; }
-
-        [Required(ErrorMessage = "El {0} es requerido.")]
         [Display(Name = "Id Usuario")]
         public int UserId { get; set; }
 
         //Objeto-Propiedad
+        [Display(Name = "Marca")]
         public CBrand Brand { get; set; }
+        [Display(Name = "Categoría")]
         public CCategory Category { get; set; }
         public ICollection<CSaleDetail> SaleDetails { get; set; }
         public ICollection<CPurchaseDetail> PurchaseDetails { get; set; }
