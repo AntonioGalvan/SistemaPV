@@ -14,16 +14,21 @@
     {
         private readonly DataContext dataContext;
         private readonly ICombosHelper combosHelper;
+        private readonly IImageHelper imageHelper;
 
-        public CProductsController(DataContext dataContext, ICombosHelper combosHelper)
+        public CProductsController(DataContext dataContext, ICombosHelper combosHelper, IImageHelper imageHelper)
         {
             this.dataContext = dataContext;
             this.combosHelper = combosHelper;
+            this.imageHelper = imageHelper;
         }
 
         public async Task<IActionResult>Index()
         {
-            return View(await this.dataContext.Products.ToListAsync());
+            return View(await this.dataContext.Products
+                .Include(p => p.Brand)
+                .Include(p => p.Category)
+                .ToListAsync());
         }
 
         public IActionResult Create()
@@ -48,7 +53,8 @@
                     Price = model.Price,
                     Quantity = model.Quantity,
                     Description = model.Description,
-                    ImageUrl = model.ImageUrl,
+                    ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
+                        model.ImageFile, model.Name, "products") : string.Empty),
                     Brand = await this.dataContext.Brands.FindAsync(model.BrandId),
                     Category = await this.dataContext.Categories.FindAsync(model.CategoryId)
                 };
