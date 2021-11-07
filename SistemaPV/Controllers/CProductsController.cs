@@ -138,8 +138,13 @@
             {
                 return NotFound();
             }
+            var model = new ProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+            };
 
-            return View(product);
+            return View(model);
         }
 
         [HttpPost, ActionName("Delete")]
