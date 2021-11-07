@@ -65,5 +65,96 @@
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await this.dataContext.Products
+                .Include(p => p.Brand)
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var model = new ProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Quantity = product.Quantity,
+                Price = product.Price,
+                ImageUrl = product.ImageUrl,
+                Brand = product.Brand,
+                Category = product.Category,
+                BrandId = product.Brand.Id,
+                CategoryId = product.Category.Id,
+
+                Brands = this.combosHelper.GetComboBrands(), 
+                Categories = this.combosHelper.GetComboCategories()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ProductViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var product = new CProduct
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    Price = model.Price,
+                    Quantity = model.Quantity,
+                    Description = model.Description,
+                    ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
+                        model.ImageFile, model.Name, "products") : model.ImageUrl),
+                    Brand = await this.dataContext.Brands.FindAsync(model.BrandId),
+                    Category = await this.dataContext.Categories.FindAsync(model.CategoryId)
+                };
+                this.dataContext.Update(product);
+                await this.dataContext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await dataContext.Products
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var product = await this.dataContext.Products.FindAsync(id);
+            dataContext.Products.Remove(product);
+            await dataContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool CProductExists(int id)
+        {
+            return dataContext.Products.Any(e => e.Id == id);
+        }
     }
 }

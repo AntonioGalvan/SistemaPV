@@ -8,6 +8,7 @@
 
     public class ProductViewModel:CProduct
     {
+        [Display(Name = "Imágen")]
         public IFormFile ImageFile { get; set; }
 
         [Display(Name = "Marca")]

@@ -1,18 +1,17 @@
-﻿@model SistemaPV.Data.Entities.CCategory
-
+﻿@model SistemaPV.Models.ProductViewModel
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Borrar Producto";
 }
 
-<h1>Borrar Categoría</h1>
+<h1>Borrar Producto</h1>
 
-<h3>¿Estás seguro de que deseas borrar la categoría?</h3>
+<h3>¿Estás seguro de que deseas borrar el producto?</h3>
 <div>
-    <h4>Categoría</h4>
+    <h4>Producto</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Name)s
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
@@ -22,6 +21,7 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Borrar" class="btn btn-danger" /> |
-        <a asp-action="Index">Volver a Categorías</a>
+        <a asp-action="Index">Volver a productos</a>
     </form>
 </div>
+
