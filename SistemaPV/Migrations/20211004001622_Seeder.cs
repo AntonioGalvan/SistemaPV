@@ -2,7 +2,7 @@
 
 namespace SistemaPV.Migrations
 {
-    public partial class imagenesO : Migration
+    public partial class Seeder : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

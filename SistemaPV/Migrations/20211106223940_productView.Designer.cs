@@ -10,8 +10,8 @@ using SistemaPV.Data;
 namespace SistemaPV.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211107175552_SistemaProducto")]
-    partial class SistemaProducto
+    [Migration("20211106223940_productView")]
+    partial class productView
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
