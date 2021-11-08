@@ -40,6 +40,8 @@ namespace SistemaPV.Controllers
 
             return View(cCategory);
         }
+
+        [Authorize(Roles = "Manager")]
         public IActionResult Create()
         {
             return View();
@@ -56,6 +58,8 @@ namespace SistemaPV.Controllers
             }
             return View(cCategory);
         }
+
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -102,6 +106,8 @@ namespace SistemaPV.Controllers
             }
             return View(cCategory);
         }
+
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

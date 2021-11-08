@@ -40,10 +40,13 @@ namespace SistemaPV.Controllers
 
             return View(cBrand);
         }
+
+        [Authorize(Roles = "Manager")]
         public IActionResult Create()
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CBrand cBrand)
@@ -56,6 +59,8 @@ namespace SistemaPV.Controllers
             }
             return View(cBrand);
         }
+
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -102,6 +107,8 @@ namespace SistemaPV.Controllers
             }
             return View(cBrand);
         }
+
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
