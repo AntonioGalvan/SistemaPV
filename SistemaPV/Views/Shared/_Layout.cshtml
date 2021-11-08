@@ -15,7 +15,18 @@
         <div class="header_toggle" id="hamburguesa">
             <i class='bi bi-arrow-bar-right' id="header-toggle"></i>
         </div>
-        <i class="bi bi-info-circle-fill"></i>
+        <div class="card-header">
+            @if (this.User.Identity.IsAuthenticated)
+            {
+                <div>@this.User.Identity.Name</div>
+                <div><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></div>
+            }
+            else
+            {
+                <div><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></div>
+            }
+            <!--<i class="bi bi-info-circle-fill"></i>-->
+        </div>
     </header>
     <div class="l-navbar" id="nav-bar">
         <nav class="nav" style="color: #AFA5D9">
