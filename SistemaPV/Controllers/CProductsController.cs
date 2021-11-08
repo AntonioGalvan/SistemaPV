@@ -67,6 +67,22 @@
             }
             return View(model);
         }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var cProduct = await dataContext.Products.Include(b=>b.Brand).Include(c=>c.Category)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (cProduct == null)
+            {
+                return NotFound();
+            }
+
+            return View(cProduct);
+        }
 
         [HttpGet]
         [Authorize(Roles = "Admin, Manager")]
