@@ -20,6 +20,7 @@
             {
                 <div>@this.User.Identity.Name</div>
                 <div style="display:flex; justify-content:right; margin:0"><a asp-area="" asp-controller="Account" asp-action="Logout"><i class="bi bi-box-arrow-left nav_icon"></i>  Logout</a></div>
+
             }
             else
             {
@@ -36,26 +37,61 @@
                     <span class="nav_logo-name">SistemaPV</span>
                 </a>
                 <div class="nav_list">
-                    <a class="nav_link" asp-area="" asp-controller="CBrands" asp-action="Index">
-                        <i class="bi bi-tags-fill nav_icon"></i>
-                        <span class="nav_name">Marcas</span>
-                    </a>
-                    <a class="nav_link" asp-area="" asp-controller="CCategories" asp-action="Index">
-                        <i class="bi bi-layers-fill nav_icon"></i>
-                        <span class="nav_name">Categorías</span>
-                    </a>
-                    <a class="nav_link" asp-area="" asp-controller="CProducts" asp-action="Index">
-                        <i class="bi bi-box-seam nav_icon"></i>
-                        <span class="nav_name">Productos</span>
-                    </a>
-                    <a class="nav_link dropdown-button" style="margin:0">
-                        <i class="bi bi-person-fill nav_icon"></i>
-                        <span class="nav_name">Usuarios</span>
-                    </a>
-                    <div class="dropdown-container" style="display:none">
-                        <a class="nav_link drop" style="margin:0" asp-area="" asp-controller="CManagers" asp-action="Index"><i class="bi bi-briefcase nav_icon"></i>Gerentes</a>
-                        <a class="nav_link drop" style="margin:0" asp-area="" asp-controller="CSalesmen" asp-action="Index"><i class="bi bi-wallet2 nav_icon"></i>Vendedores</a>
-                    </div>
+                    @if (this.User.IsInRole("Salesman"))
+                    {
+                        <a class="nav_link" asp-area="" asp-controller="CProducts" asp-action="Index">
+                            <i class="bi bi-box-seam nav_icon"></i>
+                            <span class="nav_name">Productos</span>
+                        </a>
+                    }
+
+                    @if (this.User.IsInRole("Manager"))
+                    {
+                        <a class="nav_link" asp-area="" asp-controller="CBrands" asp-action="Index">
+                            <i class="bi bi-tags-fill nav_icon"></i>
+                            <span class="nav_name">Marcas</span>
+                        </a>
+                        <a class="nav_link" asp-area="" asp-controller="CCategories" asp-action="Index">
+                            <i class="bi bi-layers-fill nav_icon"></i>
+                            <span class="nav_name">Categorías</span>
+                        </a>
+                        <a class="nav_link" asp-area="" asp-controller="CProducts" asp-action="Index">
+                            <i class="bi bi-box-seam nav_icon"></i>
+                            <span class="nav_name">Productos</span>
+                        </a>
+
+                        <a class="nav_link dropdown-button" style="margin:0">
+                            <i class="bi bi-person-fill nav_icon"></i>
+                            <span class="nav_name">Usuarios</span>
+                        </a>
+                        <div class="dropdown-container" style="display:none">
+                            <a class="nav_link drop" style="margin:0" asp-area="" asp-controller="CSalesmen" asp-action="Index"><i class="bi bi-wallet2 nav_icon"></i>Vendedores</a>
+                        </div>
+                    }
+
+                    @if (this.User.IsInRole("Admin"))
+                    {
+                        <a class="nav_link" asp-area="" asp-controller="CBrands" asp-action="Index">
+                            <i class="bi bi-tags-fill nav_icon"></i>
+                            <span class="nav_name">Marcas</span>
+                        </a>
+                        <a class="nav_link" asp-area="" asp-controller="CCategories" asp-action="Index">
+                            <i class="bi bi-layers-fill nav_icon"></i>
+                            <span class="nav_name">Categorías</span>
+                        </a>
+                        <a class="nav_link" asp-area="" asp-controller="CProducts" asp-action="Index">
+                            <i class="bi bi-box-seam nav_icon"></i>
+                            <span class="nav_name">Productos</span>
+                        </a>
+                        <a class="nav_link dropdown-button" style="margin:0">
+                            <i class="bi bi-person-fill nav_icon"></i>
+                            <span class="nav_name">Usuarios</span>
+                        </a>
+                        <div class="dropdown-container" style="display:none">
+                            <a class="nav_link drop" style="margin:0" asp-area="" asp-controller="CManagers" asp-action="Index"><i class="bi bi-briefcase nav_icon"></i>Gerentes</a>
+                            <a class="nav_link drop" style="margin:0" asp-area="" asp-controller="CSalesmen" asp-action="Index"><i class="bi bi-wallet2 nav_icon"></i>Vendedores</a>
+                        </div>
+                    }
                 </div>
             </div> 
         </nav>
