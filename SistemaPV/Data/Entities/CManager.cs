@@ -11,7 +11,7 @@ namespace SistemaPV.Data.Entities
         [Display(Name = "Id")]
         public int Id { get; set; }
 
-        public CUser CUser { get; set; }
+        public CUser User { get; set; }
         public ICollection<CPurchase> Purchases { get; set; }
     }
 }

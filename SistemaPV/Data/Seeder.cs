@@ -23,6 +23,7 @@
             await dataContext.Database.EnsureCreatedAsync();
             await userHelper.CheckRoleAsync("Salesman");
             await userHelper.CheckRoleAsync("Manager");
+            await userHelper.CheckRoleAsync("Admin");
 
             if (!this.dataContext.Brands.Any())
             {
@@ -40,6 +41,11 @@
                 await CheckCategory("Laptops");
                 await CheckCategory("Celulares");
                 await CheckCategory("Línea Blanca");
+            }
+            if (!this.dataContext.Admins.Any())
+            {
+                var user = await CheckUser("Adminaso", "El Pro", "correodeadmin@gmail.com", "contraseñadeadmin", "Admin");
+                await CheckAdmin(user, "Admin");
             }
             if (!this.dataContext.Salesmen.Any())
             {
@@ -68,6 +74,13 @@
             }
         }
 
+        private async Task CheckAdmin(CUser user, string rol)
+        {
+            this.dataContext.Admins.Add(new CAdmin { User = user });
+            await this.dataContext.SaveChangesAsync();
+            await userHelper.AddUserToRoleAsync(user, rol);
+        }
+
         private async Task CheckProduct(string name, string description, int quantity, double price,string img, int brandid, int categoryid)
         {
             var product = new CProduct
@@ -76,7 +89,10 @@
                 Description = description,
                 Quantity = quantity,
                 Price = price,
-                ImageUrl = img
+                ImageUrl = img,
+                Brand=this.dataContext.Brands.Find(brandid),
+                Category=this.dataContext.Categories.Find(categoryid)
+                
             };
             this.dataContext.Products.Add(product);
             await this.dataContext.SaveChangesAsync();
@@ -91,7 +107,7 @@
 
         private async Task CheckManager(CUser user, string rol)
         {
-            this.dataContext.Managers.Add(new CManager { CUser = user });
+            this.dataContext.Managers.Add(new CManager { User = user });
             await this.dataContext.SaveChangesAsync();
             await userHelper.AddUserToRoleAsync(user, rol);
         }

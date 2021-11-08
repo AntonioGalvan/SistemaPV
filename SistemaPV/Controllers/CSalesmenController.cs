@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemaPV.Data;
 using SistemaPV.Data.Entities;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SistemaPV.Controllers
 {
+    [Authorize(Roles = "Admin, Manager")]
     public class CSalesmenController : Controller
     {
         private readonly DataContext _context;
@@ -44,6 +43,7 @@ namespace SistemaPV.Controllers
         }
 
         // GET: CSalesmen/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -66,6 +66,7 @@ namespace SistemaPV.Controllers
         }
 
         // GET: CSalesmen/Edit/5
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -117,6 +118,7 @@ namespace SistemaPV.Controllers
         }
 
         // GET: CSalesmen/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

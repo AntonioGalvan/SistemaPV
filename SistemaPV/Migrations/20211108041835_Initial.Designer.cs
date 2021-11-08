@@ -10,14 +10,14 @@ using SistemaPV.Data;
 namespace SistemaPV.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211002200449_NuevasRelaciones")]
-    partial class NuevasRelaciones
+    [Migration("20211108041835_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.15")
+                .HasAnnotation("ProductVersion", "3.1.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -152,6 +152,23 @@ namespace SistemaPV.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("SistemaPV.Data.Entities.CAdmin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Admins");
+                });
+
             modelBuilder.Entity("SistemaPV.Data.Entities.CBrand", b =>
                 {
                     b.Property<int>("Id")
@@ -177,11 +194,30 @@ namespace SistemaPV.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("SistemaPV.Data.Entities.CManager", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Managers");
                 });
 
             modelBuilder.Entity("SistemaPV.Data.Entities.CProduct", b =>
@@ -191,20 +227,23 @@ namespace SistemaPV.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BrandId")
+                    b.Property<int?>("BrandId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -212,14 +251,8 @@ namespace SistemaPV.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SaleDetailId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -227,11 +260,93 @@ namespace SistemaPV.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("SaleDetailId");
-
-                    b.HasIndex("UserId1");
-
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("SistemaPV.Data.Entities.CPurchase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagerId");
+
+                    b.ToTable("Purchases");
+                });
+
+            modelBuilder.Entity("SistemaPV.Data.Entities.CPurchaseDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CPurchaseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CPurchaseId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PurchaseDetails");
+                });
+
+            modelBuilder.Entity("SistemaPV.Data.Entities.CPurchaseDetailTemp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PurchaseDetailTemps");
                 });
 
             modelBuilder.Entity("SistemaPV.Data.Entities.CSale", b =>
@@ -241,33 +356,23 @@ namespace SistemaPV.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Change")
-                        .HasColumnType("float");
+                    b.Property<int?>("CAdminId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("PaidAmount")
                         .HasColumnType("float");
 
-                    b.Property<int>("SaleDetailId")
+                    b.Property<int?>("SalesmanId")
                         .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SaleDetailId")
-                        .IsUnique();
+                    b.HasIndex("CAdminId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("SalesmanId");
 
                     b.ToTable("Sales");
                 });
@@ -279,12 +384,77 @@ namespace SistemaPV.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Total")
+                    b.Property<int?>("CSaleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<double>("UnitPrice")
                         .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CSaleId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("SaleDetails");
+                });
+
+            modelBuilder.Entity("SistemaPV.Data.Entities.CSaleDetailTemp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<double>("UnitPrice")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SaleDetailTemps");
+                });
+
+            modelBuilder.Entity("SistemaPV.Data.Entities.CSalesman", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Salesmen");
                 });
 
             modelBuilder.Entity("SistemaPV.Data.Entities.CUser", b =>
@@ -294,6 +464,9 @@ namespace SistemaPV.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Area")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -310,9 +483,6 @@ namespace SistemaPV.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
-
-                    b.Property<string>("Job")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -347,9 +517,6 @@ namespace SistemaPV.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
-
-                    b.Property<string>("User")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(256)")
@@ -419,40 +586,122 @@ namespace SistemaPV.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SistemaPV.Data.Entities.CAdmin", b =>
+                {
+                    b.HasOne("SistemaPV.Data.Entities.CUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("SistemaPV.Data.Entities.CManager", b =>
+                {
+                    b.HasOne("SistemaPV.Data.Entities.CUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("SistemaPV.Data.Entities.CProduct", b =>
                 {
                     b.HasOne("SistemaPV.Data.Entities.CBrand", "Brand")
                         .WithMany("Products")
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BrandId");
 
                     b.HasOne("SistemaPV.Data.Entities.CCategory", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId")
+                        .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("SistemaPV.Data.Entities.CPurchase", b =>
+                {
+                    b.HasOne("SistemaPV.Data.Entities.CManager", "Manager")
+                        .WithMany("Purchases")
+                        .HasForeignKey("ManagerId");
+                });
+
+            modelBuilder.Entity("SistemaPV.Data.Entities.CPurchaseDetail", b =>
+                {
+                    b.HasOne("SistemaPV.Data.Entities.CPurchase", null)
+                        .WithMany("Items")
+                        .HasForeignKey("CPurchaseId");
+
+                    b.HasOne("SistemaPV.Data.Entities.CProduct", "Product")
+                        .WithMany("PurchaseDetails")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SistemaPV.Data.Entities.CSaleDetail", "SaleDetail")
-                        .WithMany("Products")
-                        .HasForeignKey("SaleDetailId");
+                    b.HasOne("SistemaPV.Data.Entities.CUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SistemaPV.Data.Entities.CPurchaseDetailTemp", b =>
+                {
+                    b.HasOne("SistemaPV.Data.Entities.CProduct", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SistemaPV.Data.Entities.CUser", "User")
-                        .WithMany("Products")
-                        .HasForeignKey("UserId1");
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SistemaPV.Data.Entities.CSale", b =>
                 {
-                    b.HasOne("SistemaPV.Data.Entities.CSaleDetail", "SaleDetail")
-                        .WithOne("Sales")
-                        .HasForeignKey("SistemaPV.Data.Entities.CSale", "SaleDetailId")
+                    b.HasOne("SistemaPV.Data.Entities.CAdmin", null)
+                        .WithMany("Sales")
+                        .HasForeignKey("CAdminId");
+
+                    b.HasOne("SistemaPV.Data.Entities.CSalesman", "Salesman")
+                        .WithMany("Sales")
+                        .HasForeignKey("SalesmanId");
+                });
+
+            modelBuilder.Entity("SistemaPV.Data.Entities.CSaleDetail", b =>
+                {
+                    b.HasOne("SistemaPV.Data.Entities.CSale", null)
+                        .WithMany("Items")
+                        .HasForeignKey("CSaleId");
+
+                    b.HasOne("SistemaPV.Data.Entities.CProduct", "Product")
+                        .WithMany("SaleDetails")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SistemaPV.Data.Entities.CUser", "User")
-                        .WithMany("Sales")
-                        .HasForeignKey("UserId1");
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SistemaPV.Data.Entities.CSaleDetailTemp", b =>
+                {
+                    b.HasOne("SistemaPV.Data.Entities.CProduct", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SistemaPV.Data.Entities.CUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SistemaPV.Data.Entities.CSalesman", b =>
+                {
+                    b.HasOne("SistemaPV.Data.Entities.CUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

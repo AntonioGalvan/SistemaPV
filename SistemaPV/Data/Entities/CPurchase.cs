@@ -12,24 +12,21 @@ namespace SistemaPV.Data.Entities
         public int Id { get; set; }
 
         [Required(ErrorMessage = "El {0} es requerido.")]
-        [MaxLength(30, ErrorMessage = "Debe introducir un máximo de {1} caracteres.")]
-        [Display(Name = "Descripción")]
-        public string Description { get; set; }
-
-        [Required(ErrorMessage = "El {0} es requerido.")]
-        [Display(Name = "Recibido")]
-        public double Received { get; set; }
-
-        [Required(ErrorMessage = "El {0} es requerido.")]
-        [Display(Name = "Cambio")]
-        public double Change { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
+        [Display(Name = "Fecha de orden")]
+        public DateTime OrderDate { get; set; }
 
         [Required(ErrorMessage = "El {0} es requerido.")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
-        [Display(Name = "Fecha y Hora")]
-        public DateTime DateTime { get; set; }
+        [Display(Name = "Fecha de entrega")]
+        public DateTime DeliveryDate { get; set; }
+        public IEnumerable<CPurchaseDetail> Items { get; set; }
+        public int Quantity { get { return this.Items == null ? 0 : this.Items.Sum(i=>i.Quantity); } }
 
+        [DisplayFormat(DataFormatString = "{0:C2}")]
+        [Display(Name = "Total")]
+        public double Total { get { return this.Items == null ? 0 : this.Items.Sum(i => i.Amount); } }
         public CManager Manager { get; set; }
-        public ICollection<CPurchaseDetail> PurchaseDetails { get; set; }
+        
     }
 }

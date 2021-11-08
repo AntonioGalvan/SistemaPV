@@ -1,5 +1,6 @@
 ﻿namespace SistemaPV.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    [Authorize(Roles = "Admin, Manager,Salesman")]
     public class CProductsController:Controller
     {
         private readonly DataContext dataContext;
@@ -31,6 +33,7 @@
                 .ToListAsync());
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         public IActionResult Create()
         {
             var model = new ProductViewModel
@@ -66,6 +69,7 @@
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -125,6 +129,7 @@
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
