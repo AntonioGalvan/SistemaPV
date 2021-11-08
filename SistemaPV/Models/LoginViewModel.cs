@@ -5,6 +5,7 @@
     {
         [Required]
         [Display(Name = "Usuario")]
+        [EmailAddress]
         public string UserName { get; set; }
         [Required]
         [MinLength(8)]

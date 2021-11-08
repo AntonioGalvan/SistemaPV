@@ -119,7 +119,7 @@
                     LastName = lastName,
                     Email = email,
                     UserName = email,
-                    Area = area
+                    Area = area,
                 };
                 var result = await userHelper.AddUserAsync(user, password);
                 if (result != IdentityResult.Success)
