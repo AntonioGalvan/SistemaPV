@@ -50,5 +50,25 @@
             return list;
 
         }
+
+        public IEnumerable<SelectListItem> GetComboProducts()
+        {
+            var list = this.dataContext.Products.Select(b => new SelectListItem
+            {
+                Text = b.Name,
+                Value = $"{b.Id}"
+            }).ToList();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "Selecciona una categoría",
+                Value = "0"
+            });
+
+            return list;
+
+        }
+
+
     }
 }
