@@ -26,7 +26,7 @@ namespace SistemaPV.Data.Entities
         [DisplayFormat(DataFormatString = "{0:C2}")]
         [Display(Name = "Total")]
         public double Total { get { return this.Items == null ? 0 : this.Items.Sum(i => i.Amount); } }
-        public CManager Manager { get; set; }
+        public CUser User { get; set; }
         
     }
 }

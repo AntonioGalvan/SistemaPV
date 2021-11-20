@@ -33,7 +33,7 @@
                 .ToListAsync());
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Admin, Manager")]
         public IActionResult Create()
         {
             var model = new ProductViewModel
@@ -85,7 +85,7 @@
         }
 
         [HttpGet]
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -145,7 +145,7 @@
             return View(model);
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

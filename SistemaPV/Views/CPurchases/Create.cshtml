@@ -4,10 +4,6 @@
 }
 
 <h1>Nueva compra</h1>
-
-<div>
-    <a asp-action="addProduct">Agregar Producto</a>
-</div>
 <div>
     <a asp-action="confirmOrder">Confirmar Compra</a>
 </div>
@@ -29,6 +25,7 @@
             <th></th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var item in Model)
         {
@@ -54,6 +51,10 @@
         }
     </tbody>
 </table>
+<div>
+    <a asp-action="addProduct">Agregar Producto</a>
+</div>
+
 
 
 

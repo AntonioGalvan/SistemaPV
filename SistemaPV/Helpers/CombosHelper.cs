@@ -61,7 +61,7 @@
 
             list.Insert(0, new SelectListItem
             {
-                Text = "Selecciona una categoría",
+                Text = "Selecciona un producto",
                 Value = "0"
             });
 
