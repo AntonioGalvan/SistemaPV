@@ -13,14 +13,14 @@ using System.Threading.Tasks;
 namespace SistemaPV.Controllers
 {
     [Authorize(Roles = "Admin, Manager")]
-    public class CPurchasesController:Controller
+    public class CSalesController : Controller
     {
         private readonly DataContext datacontext;
         private readonly IUserHelper userHelper;
         private readonly ICombosHelper combosHelper;
 
 
-        public CPurchasesController(DataContext datacontext, IUserHelper userHelper, ICombosHelper combosHelper)
+        public CSalesController(DataContext datacontext, IUserHelper userHelper, ICombosHelper combosHelper)
         {
             this.datacontext = datacontext;
             this.userHelper = userHelper;
@@ -30,18 +30,18 @@ namespace SistemaPV.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
-            if(user == null)
+            if (user == null)
             {
                 return NotFound();
             }
             return View
                 (
-                this.datacontext.Purchases.Include(o => o.Items)
+                this.datacontext.Sales.Include(o => o.Items)
                 .ThenInclude(i => i.Product)
                 .Where(o => o.User == user)
                 );
         }
-        
+
         public async Task<IActionResult> Create()
         {
             var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
@@ -50,7 +50,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var model = this.datacontext.PurchaseDetailTemps
+            var model = this.datacontext.SaleDetailTemps
                 .Include(od => od.Product)
                 .Where(od => od.User == user);
 
@@ -83,23 +83,23 @@ namespace SistemaPV.Controllers
                 {
                     return NotFound();
                 }
-                var purchaseDetailTemp = await this.datacontext.PurchaseDetailTemps
+                var saleDetailTemp = await this.datacontext.SaleDetailTemps
                     .Where(pd => pd.User == user && pd.Product == product).FirstOrDefaultAsync();
-                if (purchaseDetailTemp == null)
+                if (saleDetailTemp == null)
                 {
-                    purchaseDetailTemp = new CPurchaseDetailTemp
+                    saleDetailTemp = new CSaleDetailTemp
                     {
                         Product = product,
                         Quantity = model.Quantity,
                         UnitPrice = product.Price,
                         User = user
                     };
-                    this.datacontext.PurchaseDetailTemps.Add(purchaseDetailTemp);
+                    this.datacontext.SaleDetailTemps.Add(saleDetailTemp);
                 }
                 else
                 {
-                    purchaseDetailTemp.Quantity += model.Quantity;
-                    this.datacontext.PurchaseDetailTemps.Update(purchaseDetailTemp);
+                    saleDetailTemp.Quantity += model.Quantity;
+                    this.datacontext.SaleDetailTemps.Update(saleDetailTemp);
                 }
                 await this.datacontext.SaveChangesAsync();
                 return this.RedirectToAction("Create");
@@ -114,12 +114,12 @@ namespace SistemaPV.Controllers
             {
                 return NotFound();
             }
-            var purchaseDetailTemp = await this.datacontext.PurchaseDetailTemps.FindAsync(id);
-            if (purchaseDetailTemp == null)
+            var saleDetailTemp = await this.datacontext.SaleDetailTemps.FindAsync(id);
+            if (saleDetailTemp == null)
             {
                 return NotFound();
             }
-            this.datacontext.PurchaseDetailTemps.Remove(purchaseDetailTemp);
+            this.datacontext.SaleDetailTemps.Remove(saleDetailTemp);
             await this.datacontext.SaveChangesAsync();
             return this.RedirectToAction("Create");
         }
@@ -129,13 +129,13 @@ namespace SistemaPV.Controllers
             {
                 return NotFound();
             }
-            var purchaseDetailTemp = await this.datacontext.PurchaseDetailTemps.FindAsync(id);
-            if (purchaseDetailTemp == null)
+            var saleDetailTemp = await this.datacontext.SaleDetailTemps.FindAsync(id);
+            if (saleDetailTemp == null)
             {
                 return NotFound();
             }
-            purchaseDetailTemp.Quantity += 1;
-            this.datacontext.PurchaseDetailTemps.Update(purchaseDetailTemp);
+            saleDetailTemp.Quantity += 1;
+            this.datacontext.SaleDetailTemps.Update(saleDetailTemp);
             await this.datacontext.SaveChangesAsync();
             return this.RedirectToAction("Create");
         }
@@ -145,16 +145,16 @@ namespace SistemaPV.Controllers
             {
                 return NotFound();
             }
-            var purchaseDetailTemp = await this.datacontext.PurchaseDetailTemps.FindAsync(id);
-            if (purchaseDetailTemp == null)
+            var saleDetailTemp = await this.datacontext.SaleDetailTemps.FindAsync(id);
+            if (saleDetailTemp == null)
             {
                 return NotFound();
             }
-            purchaseDetailTemp.Quantity -= 1;
-            if (purchaseDetailTemp.Quantity >= 1)
+            saleDetailTemp.Quantity -= 1;
+            if (saleDetailTemp.Quantity >= 1)
             {
-                
-                this.datacontext.PurchaseDetailTemps.Update(purchaseDetailTemp);
+
+                this.datacontext.SaleDetailTemps.Update(saleDetailTemp);
                 await this.datacontext.SaveChangesAsync();
             }
             return this.RedirectToAction("Create");
@@ -167,34 +167,34 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var purchaseDetailTemps = await this.datacontext.PurchaseDetailTemps
+            var saleDetailTemps = await this.datacontext.SaleDetailTemps
                 .Include(pdt => pdt.Product)
                 .Where(pdt => pdt.User == user)
                 .ToListAsync();
-            if (purchaseDetailTemps == null || purchaseDetailTemps.Count == 0)
+            if (saleDetailTemps == null || saleDetailTemps.Count == 0)
             {
                 return NotFound();
             }
-            var details = purchaseDetailTemps.Select(pdt => new CPurchaseDetail
+            var details = saleDetailTemps.Select(pdt => new CSaleDetail
             {
                 User = pdt.User,
                 Product = pdt.Product,
                 UnitPrice = pdt.UnitPrice,
                 Quantity = pdt.Quantity
             }).ToList();
-            var purchase = new CPurchase
+            var sale = new CSale
             {
-                OrderDate = DateTime.UtcNow,
+                Date = DateTime.UtcNow,
                 User = user,
-                DeliveryDate = DateTime.UtcNow,
+                
                 Items = details
             };
-            this.datacontext.Purchases.Add(purchase);
-            this.datacontext.PurchaseDetailTemps.RemoveRange(purchaseDetailTemps);
+            this.datacontext.Sales.Add(sale);
+            this.datacontext.SaleDetailTemps.RemoveRange(saleDetailTemps);
 
             for (int i = 0; i < details.Count; i++)
             {
-                this.datacontext.Products.Find(details[i].Product.Id).Quantity+= details[i].Quantity;
+                this.datacontext.Products.Find(details[i].Product.Id).Quantity -= details[i].Quantity;
             }
 
             await this.datacontext.SaveChangesAsync();
@@ -213,3 +213,4 @@ namespace SistemaPV.Controllers
         //}
     }
 }
+

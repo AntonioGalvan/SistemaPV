@@ -30,7 +30,7 @@ namespace SistemaPV.Data.Entities
         [Display(Name = "Cambio")]
         public double Change { get { return this.Items == null ? 0 : this.PaidAmount - this.Total < 0 ? 0 : this.PaidAmount - this.Total; } }
 
-        public CSalesman Salesman { get; set; }
+        public CUser User { get; set; }
        
     }
 }

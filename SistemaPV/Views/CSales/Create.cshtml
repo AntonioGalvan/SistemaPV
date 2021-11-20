@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SistemaPV.Data.Entities.CPurchaseDetailTemp>
+﻿@model IEnumerable<SistemaPV.Data.Entities.CSaleDetailTemp>
 @{
     ViewData["Title"] = "Create";
 }
@@ -49,26 +49,6 @@
                 </td>
             </tr>
         }
-        <tr>
-            <td>
-                
-            </td>
-            <td>
-                
-            </td>
-            <td>
-                <h3>Total</h3>
-            </td>
-            <td>
-                @{ double total = 0;
-                    foreach (var item in Model)
-                    {
-                        total += item.Amount;
-                    }
-                }
-                <p>$@total</p>
-            </td>
-        </tr>
     </tbody>
 </table>
 <div>
