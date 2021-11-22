@@ -41,7 +41,7 @@ namespace SistemaPV.Controllers
             return View(cBrand);
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Admin, Manager")]
         public IActionResult Create()
         {
             return View();
@@ -108,7 +108,7 @@ namespace SistemaPV.Controllers
             return View(cBrand);
         }
 
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

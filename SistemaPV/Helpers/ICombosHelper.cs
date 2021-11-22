@@ -8,5 +8,6 @@
         public IEnumerable<SelectListItem> GetComboBrands();
         public IEnumerable<SelectListItem> GetComboCategories();
         public IEnumerable<SelectListItem> GetComboProducts();
+        public IEnumerable<SelectListItem> GetComboItems();
     }
 }

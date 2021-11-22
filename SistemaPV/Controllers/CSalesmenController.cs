@@ -48,10 +48,6 @@ namespace SistemaPV.Controllers
         {
             return View();
         }
-
-        // POST: CSalesmen/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CSalesman cSalesman)
@@ -65,7 +61,6 @@ namespace SistemaPV.Controllers
             return View(cSalesman);
         }
 
-        // GET: CSalesmen/Edit/5
         [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -82,9 +77,6 @@ namespace SistemaPV.Controllers
             return View(cSalesman);
         }
 
-        // POST: CSalesmen/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CSalesman cSalesman)
@@ -117,7 +109,6 @@ namespace SistemaPV.Controllers
             return View(cSalesman);
         }
 
-        // GET: CSalesmen/Delete/5
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -136,7 +127,6 @@ namespace SistemaPV.Controllers
             return View(cSalesman);
         }
 
-        // POST: CSalesmen/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

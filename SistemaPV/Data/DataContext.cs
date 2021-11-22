@@ -22,7 +22,8 @@ namespace SistemaPV.Data
         public DbSet<CSaleDetail> SaleDetails { get; set; }
         public DbSet<CSaleDetailTemp> SaleDetailTemps { get; set; }
         public DbSet<CSalesman> Salesmen { get; set; }
-        
+        public DbSet<CSaleTemp> CSaleTemps { get; set; }
+
 
 
         //Contexto de datos

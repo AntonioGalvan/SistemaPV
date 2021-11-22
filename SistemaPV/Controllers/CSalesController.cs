@@ -6,13 +6,12 @@ using SistemaPV.Data.Entities;
 using SistemaPV.Helpers;
 using SistemaPV.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SistemaPV.Controllers
 {
-    [Authorize(Roles = "Admin, Manager")]
+    [Authorize(Roles = "Admin, Manager, Salesman")]
     public class CSalesController : Controller
     {
         private readonly DataContext datacontext;
@@ -50,11 +49,19 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var model = this.datacontext.SaleDetailTemps
+            var saleDetailTemps = this.datacontext.SaleDetailTemps
                 .Include(od => od.Product)
-                .Where(od => od.User == user);
+                .Where(od => od.User == user)
+                .ToList();
 
-            return View(model);
+            var saleTemp = new CSaleTemp
+            {
+                User = user,
+                Items = saleDetailTemps,
+                Date = null
+            };
+
+            return View(saleDetailTemps);
         }
 
         public IActionResult addProduct()
@@ -67,7 +74,6 @@ namespace SistemaPV.Controllers
 
             return View(model);
         }
-
         [HttpPost]
         public async Task<IActionResult> addProduct(additemViewModel model)
         {
@@ -107,7 +113,7 @@ namespace SistemaPV.Controllers
 
             return this.View(model);
         }
-
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> deleteItem(int? id)
         {
             if (id == null)
@@ -159,58 +165,44 @@ namespace SistemaPV.Controllers
             }
             return this.RedirectToAction("Create");
         }
-        public async Task<IActionResult> confirmOrder()
+        public IActionResult confirmOrder()
+        {
+            var model = new addSaleViewModel
+            {
+                PaidAmmount = 0,
+                Items = this.combosHelper.GetComboItems()
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> confirmOrder(addSaleViewModel model)
         {
             var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
             if (user == null)
             {
                 return NotFound();
             }
+            var sale = await this.datacontext.CSaleTemps
+                .Include(pdt => pdt.Items)
+                .FirstOrDefaultAsync(usr => usr.User == user);
 
-            var saleDetailTemps = await this.datacontext.SaleDetailTemps
-                .Include(pdt => pdt.Product)
-                .Where(pdt => pdt.User == user)
-                .ToListAsync();
-            if (saleDetailTemps == null || saleDetailTemps.Count == 0)
+            if (sale == null || sale.Items.Count == 0)
             {
                 return NotFound();
             }
-            var details = saleDetailTemps.Select(pdt => new CSaleDetail
-            {
-                User = pdt.User,
-                Product = pdt.Product,
-                UnitPrice = pdt.UnitPrice,
-                Quantity = pdt.Quantity
-            }).ToList();
-            var sale = new CSale
-            {
-                Date = DateTime.UtcNow,
-                User = user,
-                
-                Items = details
-            };
-            this.datacontext.Sales.Add(sale);
-            this.datacontext.SaleDetailTemps.RemoveRange(saleDetailTemps);
 
-            for (int i = 0; i < details.Count; i++)
+            var items = sale.Items.ToList();
+
+            for (int i = 0; i < items.Count; i++)
             {
-                this.datacontext.Products.Find(details[i].Product.Id).Quantity -= details[i].Quantity;
+                this.datacontext.Products.Find(items[i].Product.Id).Quantity -= items[i].Quantity;
             }
+            sale.PaidAmount = 1;
 
             await this.datacontext.SaveChangesAsync();
             return this.RedirectToAction("Index");
         }
-
-        //public async Task<IActionResult> gotOrder(additemViewModel model)
-        //{
-        //    var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    model
-        //}
     }
 }
 
