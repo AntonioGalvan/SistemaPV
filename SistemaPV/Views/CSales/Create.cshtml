@@ -3,9 +3,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Nueva venta</h1>
+<h1>Artículos</h1>
 <div>
-    <a asp-action="confirmOrder">Confirmar venta</a>
+    <a asp-action="confirmOrder">Confirmar Venta</a>
 </div>
 <table class="table">
     <thead>
@@ -22,7 +22,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Amount)
             </th>
-
             <th></th>
         </tr>
     </thead>
@@ -53,8 +52,7 @@
     </tbody>
 </table>
 <div>
-    <a asp-action="addProduct" class="button"><i class="bi bi-plus-lg"></i></a>
-    <a asp-action="Index" class="button"><i class="bi bi-arrow-return-left"></i></a>
+    <a asp-action="addProduct">Agregar Producto</a>
 </div>
 
 
