@@ -1,0 +1,30 @@
+﻿@model SistemaPV.Data.Entities.CSale
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Pago de venta</h1>
+<h4>Ingresa los datos</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label asp-for="PaidAmount" class="control-label"></label>
+                <input asp-for="PaidAmount" class="form-control" />
+                <span asp-validation-for="PaidAmount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="button"><i class="bi bi-arrow-return-left"></i></a>
+</div>
+

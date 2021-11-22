@@ -198,7 +198,56 @@ namespace SistemaPV.Controllers
             }
 
             await this.datacontext.SaveChangesAsync();
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction("Edit", new { id = sale.Id });
+
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var sale = await this.datacontext.Sales
+                .FirstOrDefaultAsync(p => p.Id == id);
+            if (sale == null)
+            {
+                return NotFound();
+            }
+            var model = new CSale
+            {
+                Id = sale.Id,
+                Date = sale.Date,
+                PaidAmount = sale.PaidAmount,
+                User = user
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(CSale model)
+        {
+            if (ModelState.IsValid)
+            {
+                var sale = new CSale
+                {
+                    Id = model.Id,
+                    Date = model.Date,
+                    PaidAmount = model.PaidAmount
+                };
+                this.datacontext.Update(sale);
+                await this.datacontext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
         }
 
         //public async Task<IActionResult> gotOrder(additemViewModel model)
