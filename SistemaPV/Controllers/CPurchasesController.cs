@@ -201,6 +201,25 @@ namespace SistemaPV.Controllers
             return this.RedirectToAction("Index");
         }
 
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var purchase = await this.datacontext.Purchases.Include(o => o.Items)
+                .ThenInclude(i => i.Product)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (purchase == null)
+            {
+                return NotFound();
+            }
+
+            return View(purchase);
+        }
+
         //public async Task<IActionResult> gotOrder(additemViewModel model)
         //{
         //    var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);

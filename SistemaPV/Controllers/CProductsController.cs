@@ -71,7 +71,7 @@
         {
             if (id == null)
             {
-                return NotFound();
+                return NotFound();  
             }
 
             var cProduct = await dataContext.Products.Include(b=>b.Brand).Include(c=>c.Category)

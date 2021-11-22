@@ -1,0 +1,59 @@
+﻿@model SistemaPV.Data.Entities.CPurchase
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <dl class="row">
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </dt>
+
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.OrderDate)
+            </dd>
+
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.DeliveryDate)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.DeliveryDate)
+            </dd>
+
+
+            @foreach (var item in Model.Items)
+            {
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => item.Product.Name)
+                </dt>
+                <dd class="col-sm-6">
+                    @Html.DisplayFor(model => item.Product.Name)
+                </dd>
+            }
+
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.Total)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.Total)
+            </dd>
+        </dl>
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver a productos</a>
+</div>
+

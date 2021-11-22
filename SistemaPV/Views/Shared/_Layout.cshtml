@@ -43,6 +43,11 @@
                             <i class="bi bi-box-seam nav_icon"></i>
                             <span class="nav_name">Productos</span>
                         </a>
+
+                        <a class="nav_link" asp-area="" asp-controller="CSales" asp-action="Index">
+                            <i class="bi bi-cart-plus"></i>
+                            <span class="nav_name">Ventas</span>
+                        </a>
                     }
 
                     @if (this.User.IsInRole("Manager"))
@@ -58,6 +63,16 @@
                         <a class="nav_link" asp-area="" asp-controller="CProducts" asp-action="Index">
                             <i class="bi bi-box-seam nav_icon"></i>
                             <span class="nav_name">Productos</span>
+                        </a>
+
+                        <a class="nav_link" asp-area="" asp-controller="CPurchases" asp-action="Index">
+                            <i class="bi bi-bag"></i>
+                            <span class="nav_name">Compras</span>
+                        </a>
+
+                        <a class="nav_link" asp-area="" asp-controller="CSales" asp-action="Index">
+                            <i class="bi bi-cart-plus"></i>
+                            <span class="nav_name">Ventas</span>
                         </a>
 
                         <a class="nav_link dropdown-button" style="margin:0">
@@ -83,10 +98,19 @@
                             <i class="bi bi-box-seam nav_icon"></i>
                             <span class="nav_name">Productos</span>
                         </a>
+                        <a class="nav_link" asp-area="" asp-controller="CPurchases" asp-action="Index">
+                            <i class="bi bi-bag"></i>
+                            <span class="nav_name">Compras</span>
+                        </a>
+                        <a class="nav_link" asp-area="" asp-controller="CSales" asp-action="Index">
+                            <i class="bi bi-cart-plus"></i>
+                            <span class="nav_name">Ventas</span>
+                        </a>
                         <a class="nav_link dropdown-button" style="margin:0">
                             <i class="bi bi-person-fill nav_icon"></i>
                             <span class="nav_name">Usuarios</span>
                         </a>
+
                         <div class="dropdown-container" style="display:none">
                             <a class="nav_link drop" style="margin:0" asp-area="" asp-controller="CManagers" asp-action="Index"><i class="bi bi-briefcase nav_icon"></i>Gerentes</a>
                             <a class="nav_link drop" style="margin:0" asp-area="" asp-controller="CSalesmen" asp-action="Index"><i class="bi bi-wallet2 nav_icon"></i>Vendedores</a>
