@@ -32,7 +32,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cSalesman = await _context.Salesmen
+            var cSalesman = await _context.Salesmen.Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cSalesman == null)
             {

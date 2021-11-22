@@ -200,6 +200,32 @@ td a {
         text-decoration:none;
     }
 
+.button {
+    background-color: #F2F2F2;
+    color: dimgray;
+    margin-left: 10px;
+    font-size: 1.2rem;
+    padding: 5px;
+    border-radius: 50%;
+    display: inline-block;
+    width: 43px;
+    height: 43px;
+    align-items: center;
+    justify-content: center;
+}
+
+    .button i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+    }
+
+.butto:target {
+    text-decoration: none;
+}
+
 @media screen and (min-width: 768px) {
     body {
         margin: calc(var(--header-height) + 1rem) 0 0 0;

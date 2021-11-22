@@ -24,17 +24,6 @@
                 @Html.DisplayFor(model => model.DeliveryDate)
             </dd>
 
-
-            @foreach (var item in Model.Items)
-            {
-                <dt class="col-sm-6">
-                    @Html.DisplayNameFor(model => item.Product.Name)
-                </dt>
-                <dd class="col-sm-6">
-                    @Html.DisplayFor(model => item.Product.Name)
-                </dd>
-            }
-
             <dt class="col-sm-6">
                 @Html.DisplayNameFor(model => model.Quantity)
             </dt>
@@ -51,9 +40,37 @@
         </dl>
 
     </div>
-</div>
+    <div class="col-md-12">            
+            <dl class="row">
+                <dt class="col-md-12">
+                    Productos
+                </dt>
+                <dt class="col-sm-4">
+                    Nombre
+                </dt>
+                <dt class="col-sm-4">
+                    Cantidad
+                </dt>
+                <dt class="col-sm-4">
+                    Precio Unitario
+                </dt>
+                @foreach (var item in Model.Items)
+                {
 
-<div>
-    <a asp-action="Index">Volver a productos</a>
-</div>
+                    <dd class="col-sm-4">
+                        @Html.DisplayFor(model => item.Product.Name)
+                    </dd>
+                    <dd class="col-sm-4">
+                        @Html.DisplayFor(model => item.Product.Quantity)
+                    </dd>
+                    <dd class="col-sm-4">
+                        @Html.DisplayFor(model => item.Product.Price)
+                    </dd>
+                }
+            </dl>
+     </div>
+
+    <div class="col-md-12">
+        <a asp-action="Index" class="button"><i class="bi bi-arrow-return-left"></i>Volver</a>
+    </div>
 
