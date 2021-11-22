@@ -22,7 +22,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Total)
             </th>
-            <th></th>
+            <th>
+                Recibir
+            </th>
+            <th>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -41,9 +45,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Total)
             </td>
+            @if (!item.Received)
+            {
+                <td>
+                    <a asp-action="OrderReceived" asp-route-id="@item.Id"><i class="bi bi-check-square"></i></a>
+                </td>
+            }
+            else
+            {
+                <td>Recibido</td>
+            }
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-search"></i></a>
             </td>
+
         </tr>
         }
     </tbody>

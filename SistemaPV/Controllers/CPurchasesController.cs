@@ -186,16 +186,12 @@ namespace SistemaPV.Controllers
             {
                 OrderDate = DateTime.UtcNow,
                 User = user,
-                DeliveryDate = DateTime.UtcNow,
-                Items = details
+                DeliveryDate = null,
+                Items = details,
+                Received = false
             };
             this.datacontext.Purchases.Add(purchase);
             this.datacontext.PurchaseDetailTemps.RemoveRange(purchaseDetailTemps);
-
-            for (int i = 0; i < details.Count; i++)
-            {
-                this.datacontext.Products.Find(details[i].Product.Id).Quantity+= details[i].Quantity;
-            }
 
             await this.datacontext.SaveChangesAsync();
             return this.RedirectToAction("Index");
@@ -220,15 +216,37 @@ namespace SistemaPV.Controllers
             return View(purchase);
         }
 
-        //public async Task<IActionResult> gotOrder(additemViewModel model)
-        //{
-        //    var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> OrderReceived(int? id)
+        {
+            var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //    model
-        //}
+            var purchase = await this.datacontext.Purchases.Include(o => o.Items)
+                .ThenInclude(i => i.Product)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (purchase.Received)
+            {
+                return this.RedirectToAction("Index");
+            }
+
+            purchase.Received = true;
+            purchase.DeliveryDate = DateTime.UtcNow;
+            await this.datacontext.SaveChangesAsync();
+
+            var details = purchase.Items.ToList();
+
+            for (int i = 0; i < details.Count; i++)
+            {
+                this.datacontext.Products.Find(details[i].Product.Id).Quantity += details[i].Quantity;
+            }
+
+            await this.datacontext.SaveChangesAsync();
+
+            return this.RedirectToAction("Index");
+        }
     }
 }
