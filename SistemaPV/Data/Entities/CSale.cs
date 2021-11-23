@@ -22,10 +22,12 @@ namespace SistemaPV.Data.Entities
         [Display(Name = "Total")]
         public double Total { get { return this.Items == null ? 0 : this.Items.Sum(i => i.Amount); } }
 
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         [Required(ErrorMessage = "El {0} es requerido.")]
         [Display(Name = "Monto Pagado")]
         public double PaidAmount { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         [Display(Name = "Cambio")]
         public double Change { get { return this.Items == null ? 0 : this.PaidAmount - this.Total < 0 ? 0 : this.PaidAmount - this.Total; } }
 

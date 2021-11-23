@@ -68,7 +68,7 @@
             }
             if (!this.dataContext.Products.Any())
             {
-                await CheckProduct("iPhone", "Es un iphone", 10, 120000, "", 5, 4);
+                await CheckProduct("iPhone", "Es un iphone", 10, 12000, "", 5, 4);
                 await CheckProduct("Surface", "Touch", 12, 17000, "", 2, 3);
                 await CheckProduct("Refrigerador", "Grande", 15, 27000, "", 1, 2);
             }
@@ -86,7 +86,6 @@
             var product = new CProduct
             {
                 Name = name,
-                Description = description,
                 Quantity = quantity,
                 Price = price,
                 ImageUrl = img,

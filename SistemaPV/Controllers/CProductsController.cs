@@ -55,7 +55,6 @@
                     Name = model.Name,
                     Price = model.Price,
                     Quantity = model.Quantity,
-                    Description = model.Description,
                     ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
                         model.ImageFile, model.Name, "products") : string.Empty),
                     Brand = await this.dataContext.Brands.FindAsync(model.BrandId),
@@ -105,7 +104,6 @@
             {
                 Id = product.Id,
                 Name = product.Name,
-                Description = product.Description,
                 Quantity = product.Quantity,
                 Price = product.Price,
                 ImageUrl = product.ImageUrl,
@@ -132,7 +130,6 @@
                     Name = model.Name,
                     Price = model.Price,
                     Quantity = model.Quantity,
-                    Description = model.Description,
                     ImageUrl = (model.ImageFile != null ? await imageHelper.UploadImageAsync(
                         model.ImageFile, model.Name, "products") : model.ImageUrl),
                     Brand = await this.dataContext.Brands.FindAsync(model.BrandId),

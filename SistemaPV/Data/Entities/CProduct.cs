@@ -12,14 +12,11 @@
         [Display(Name = "Producto")]
         public string Name { get; set; }
 
-        [MaxLength(100, ErrorMessage = "Debe introducir un máximo de {1} caracteres.")]
-        [Display(Name = "Descripción")]
-        public string Description { get; set; }
-
         [Required(ErrorMessage = "El {0} es requerido.")]
         [Display(Name = "Cantidad")]
         public int Quantity { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         [Required(ErrorMessage = "El {0} es requerido.")]
         [Display(Name = "Precio")]
         public double Price { get; set; }

@@ -199,6 +199,9 @@ td a {
     td a:target{
         text-decoration:none;
     }
+    td a:hover {
+        text-decoration: none;
+    }
 
 .button {
     background-color: #F2F2F2;
@@ -222,12 +225,29 @@ td a {
         width: 100%;
     }
 
-.butto:target {
+.button:target, .button:hover {
     text-decoration: none;
 }
 
-@media screen and (min-width: 768px) {
-    body {
+.button-confirm {
+    padding: .6em 1em;
+    background: #7ebf58;
+    display: block;
+    width: fit-content;
+    color: white;
+    border-radius: 10px;
+    transition: all linear .4s;
+    margin-bottom: 10px;
+}
+
+.button-confirm:hover{
+    transform: scale(1.1);
+    text-decoration: none;
+    color: white;
+}
+
+    @media screen and (min-width: 768px) {
+        body {
         margin: calc(var(--header-height) + 1rem) 0 0 0;
         padding-left: calc(var(--nav-width) + 2rem)
     }
