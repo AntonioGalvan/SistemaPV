@@ -237,6 +237,7 @@ namespace SistemaPV.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 var sale = new CSale
                 {
                     Id = model.Id,
@@ -250,16 +251,24 @@ namespace SistemaPV.Controllers
             return View(model);
         }
 
-        //public async Task<IActionResult> gotOrder(additemViewModel model)
-        //{
-        //    var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    model
-        //}
+            var sale = await this.datacontext.Sales.Include(o => o.Items)
+                .ThenInclude(i => i.Product)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (sale == null)
+            {
+                return NotFound();
+            }
+
+            return View(sale);
+        }
+
     }
 }
 

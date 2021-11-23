@@ -1,0 +1,84 @@
+﻿@model SistemaPV.Data.Entities.CSale
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<h1>Detalles</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <dl class="row">
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.Total)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.Total)
+            </dd>
+
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.PaidAmount)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.PaidAmount)
+            </dd>
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.Change)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.Change)
+            </dd>
+        </dl>
+
+    </div>
+    <div class="col-md-12">
+        <dl class="row">
+            <dt class="col-md-12">
+                Productos
+            </dt>
+            <dt class="col-sm-4">
+                Nombre
+            </dt>
+            <dt class="col-sm-4">
+                Cantidad
+            </dt>
+            <dt class="col-sm-4">
+                Precio Unitario
+            </dt>
+            @foreach (var item in Model.Items)
+            {
+
+                <dd class="col-sm-4">
+                    @Html.DisplayFor(model => item.Product.Name)
+                </dd>
+                <dd class="col-sm-4">
+                    @Html.DisplayFor(model => item.Quantity)
+                </dd>
+                <dd class="col-sm-4">
+                    @Html.DisplayFor(model => item.Product.Price)
+                </dd>
+            }
+        </dl>
+    </div>
+
+    <div class="col-md-12">
+        <a asp-action="Index" class="button"><i class="bi bi-arrow-return-left"></i></a>
+    </div>
+
+
+

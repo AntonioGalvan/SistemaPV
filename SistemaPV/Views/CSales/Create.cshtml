@@ -5,7 +5,7 @@
 
 <h1>Artículos</h1>
 <div>
-    <a asp-action="confirmOrder">Confirmar Venta</a>
+    <a asp-action="confirmOrder" class="button-confirm">Confirmar Venta</a>
 </div>
 <table class="table">
     <thead>
@@ -49,10 +49,28 @@
                 </td>
             </tr>
         }
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+                <h3>Total</h3>
+            </td>
+            <td>
+                @{ double total = 0;
+                    foreach (var item in Model)
+                    {
+                        total += item.Amount;
+                    }
+                }
+                <p>$@total</p>
+            </td>
+        </tr>
     </tbody>
 </table>
 <div>
-    <a asp-action="addProduct">Agregar Producto</a>
+    <a asp-action="addProduct" class="button"><i class="bi bi-plus-lg"></i></a>
 </div>
 
 
