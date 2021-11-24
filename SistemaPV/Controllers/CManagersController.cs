@@ -53,7 +53,7 @@ namespace SistemaPV.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(addManagerViewModel model)
+        public async Task<IActionResult> Create(addUserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -131,33 +131,6 @@ namespace SistemaPV.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(cManager);
-        }
-
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var cManager = await dataContext.Managers
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (cManager == null)
-            {
-                return NotFound();
-            }
-
-            return View(cManager);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var cManager = await dataContext.Managers.FindAsync(id);
-            dataContext.Managers.Remove(cManager);
-            await dataContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool CManagerExists(int id)

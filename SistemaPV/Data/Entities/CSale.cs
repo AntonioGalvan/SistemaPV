@@ -20,7 +20,7 @@ namespace SistemaPV.Data.Entities
 
         [DisplayFormat(DataFormatString = "{0:C2}")]
         [Display(Name = "Total")]
-        public double Total { get { return this.Items == null ? 0 : this.Items.Sum(i => i.Amount); } }
+        public double Total { get { return this.Items == null ? 0 : this.Items.Sum(i => i.Amount); } set { } }
 
         [DisplayFormat(DataFormatString = "{0:C2}")]
         [Required(ErrorMessage = "El {0} es requerido.")]
