@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SistemaPV.Models
 {
-    public class addManagerViewModel:CManager
+    public class addUserViewModel:CManager
     {
         [Display(Name ="Contraseña")]
         [Required(ErrorMessage = "El {0} es requerido.")]

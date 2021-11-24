@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistemaPV.Data;
 using SistemaPV.Data.Entities;
+using SistemaPV.Helpers;
+using SistemaPV.Models;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,20 +15,20 @@ namespace SistemaPV.Controllers
     [Authorize(Roles = "Admin, Manager")]
     public class CSalesmenController : Controller
     {
-        private readonly DataContext _context;
+        private readonly DataContext dataContext;
+        private readonly IUserHelper userHelper;
 
-        public CSalesmenController(DataContext context)
+        public CSalesmenController(DataContext context,IUserHelper userHelper)
         {
-            _context = context;
+            dataContext = context;
+            this.userHelper = userHelper;
         }
 
-        // GET: CSalesmen
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Salesmen.Include(s => s.User).ToListAsync());
+            return View(await dataContext.Salesmen.Include(s => s.User).ToListAsync());
         }
 
-        // GET: CSalesmen/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,7 +36,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cSalesman = await _context.Salesmen.Include(o => o.User)
+            var cSalesman = await dataContext.Salesmen.Include(o => o.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cSalesman == null)
             {
@@ -42,30 +46,48 @@ namespace SistemaPV.Controllers
             return View(cSalesman);
         }
 
-        // GET: CSalesmen/Create
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: CSalesmen/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CSalesman cSalesman)
+        public async Task<IActionResult> Create(addUserViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cSalesman);
-                await _context.SaveChangesAsync();
+                var user = await userHelper.GetUserByIdAsync(model.User.Id);
+                if (user == null)
+                {
+                    user = new CUser
+                    {
+                        FirstName = model.User.FirstName,
+                        LastName = model.User.LastName,
+                        Email = model.User.Email,
+                        UserName = model.User.Email,
+                        Area = model.User.Area
+                    };
+                }
+                var result = await userHelper.AddUserAsync(user, model.Pass);
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("No se ha podido añadir el usuario");
+                }
+                await userHelper.AddUserToRoleAsync(user, "Salesman");
+                var salesman = new CSalesman
+                {
+                    Id = model.Id,
+                    User = await dataContext.Users.FindAsync(user.Id)
+                };
+                dataContext.Add(salesman);
+                await dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cSalesman);
+            return View(model);
         }
 
-        // GET: CSalesmen/Edit/5
         [Authorize(Roles = "Admin, Manager")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -74,7 +96,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cSalesman = await _context.Salesmen.FindAsync(id);
+            var cSalesman = await dataContext.Salesmen.FindAsync(id);
             if (cSalesman == null)
             {
                 return NotFound();
@@ -82,9 +104,6 @@ namespace SistemaPV.Controllers
             return View(cSalesman);
         }
 
-        // POST: CSalesmen/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CSalesman cSalesman)
@@ -98,8 +117,8 @@ namespace SistemaPV.Controllers
             {
                 try
                 {
-                    _context.Update(cSalesman);
-                    await _context.SaveChangesAsync();
+                    dataContext.Update(cSalesman);
+                    await dataContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -117,39 +136,9 @@ namespace SistemaPV.Controllers
             return View(cSalesman);
         }
 
-        // GET: CSalesmen/Delete/5
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var cSalesman = await _context.Salesmen
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (cSalesman == null)
-            {
-                return NotFound();
-            }
-
-            return View(cSalesman);
-        }
-
-        // POST: CSalesmen/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var cSalesman = await _context.Salesmen.FindAsync(id);
-            _context.Salesmen.Remove(cSalesman);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool CSalesmanExists(int id)
         {
-            return _context.Salesmen.Any(e => e.Id == id);
+            return dataContext.Salesmen.Any(e => e.Id == id);
         }
     }
 }

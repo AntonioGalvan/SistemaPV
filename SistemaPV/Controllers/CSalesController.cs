@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SistemaPV.Controllers
 {
-    [Authorize(Roles = "Admin, Manager")]
+    [Authorize(Roles = "Admin, Manager,Salesman")]
     public class CSalesController : Controller
     {
         private readonly DataContext datacontext;

@@ -3,12 +3,9 @@
 @{
     ViewData["Title"] = "Details";
 }
-
 <h1>Detalles</h1>
-
-<div>
-    <h4>Gerente</h4>
-    <hr />
+<hr />
+<div class="row">
     <div class="col-md-4">
         <dl class="row">
             <dt class="col-sm-6">
@@ -22,6 +19,7 @@
             <dt class="col-sm-6">
                 @Html.DisplayNameFor(model => model.User.Email)
             </dt>
+
             <dd class="col-sm-6">
                 @Html.DisplayFor(model => model.User.Email)
             </dd>
@@ -29,12 +27,17 @@
             <dt class="col-sm-6">
                 @Html.DisplayNameFor(model => model.User.Area)
             </dt>
+
             <dd class="col-sm-6">
                 @Html.DisplayFor(model => model.User.Area)
             </dd>
         </dl>
     </div>
 </div>
-<div>
+
+<div class="col-md-12">
     <a asp-action="Index" class="button"><i class="bi bi-arrow-return-left"></i></a>
 </div>
+
+
+
