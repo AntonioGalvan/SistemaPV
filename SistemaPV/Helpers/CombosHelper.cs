@@ -30,7 +30,6 @@
             });
 
             return list;
-
         }
 
         public IEnumerable<SelectListItem> GetComboCategories()
@@ -69,6 +68,15 @@
 
         }
 
+        public IEnumerable<SelectListItem> GetComboItems()
+        {
+            var list = this.dataContext.SaleDetailTemps.Select(b => new SelectListItem
+            {
+                Value = $"{b.Product.Name} {b.Product.Price} {b.Product.Quantity}"
 
+            }).ToList();
+
+            return list;
+        }
     }
 }

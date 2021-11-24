@@ -44,5 +44,10 @@ namespace SistemaPV.Controllers
             await this.userHelper.LogoutAsync();
             return this.RedirectToAction("Index", "Home");
         }
+
+        public IActionResult NotAuthorized()
+        {
+            return this.View();
+        }
     }
 }
