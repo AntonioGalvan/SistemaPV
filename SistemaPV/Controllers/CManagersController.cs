@@ -94,7 +94,9 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cManager = await dataContext.Managers.FindAsync(id);
+            var cManager = await dataContext.Managers
+                .Include(o => o.User)
+                .FirstOrDefaultAsync(m => m.Id == id); ;
             if (cManager == null)
             {
                 return NotFound();
@@ -102,24 +104,25 @@ namespace SistemaPV.Controllers
             return View(cManager);
         }
 
+        /*
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, CManager cManager)
+        public async Task<IActionResult> Edit(addUserViewModel manager)
         {
-            if (id != cManager.Id)
-            {
-                return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
+                var user = await this.dataContext.Users.FindAsync(manager.User.Id);
+
+                user.Email = manager.User.Email;
+                user.Area = manager.User.Area;
                 try
                 {
-                    dataContext.Update(cManager);
+                    dataContext.Update(manager);
                     await dataContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CManagerExists(cManager.Id))
+                    if (!CManagerExists(manager.Id))
                     {
                         return NotFound();
                     }
@@ -130,7 +133,40 @@ namespace SistemaPV.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cManager);
+            return View(manager);
+        }
+        */
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, CManager manager)
+        {
+            if (id != manager.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    dataContext.Update(manager);
+                    await dataContext.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CManagerExists(manager.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(manager);
         }
 
         private bool CManagerExists(int id)
