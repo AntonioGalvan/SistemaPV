@@ -65,10 +65,11 @@ namespace SistemaPV.Controllers
                         FirstName = model.User.FirstName,
                         LastName = model.User.LastName,
                         Email = model.User.Email,
-                        UserName = model.User.Email
+                        UserName = model.User.Email,
+                        Area=model.User.Area
                     };
                 }
-                var result = await userHelper.AddUserAsync(user, "1234565487");
+                var result = await userHelper.AddUserAsync(user, model.Pass);
                 if (result != IdentityResult.Success)
                 {
                     throw new InvalidOperationException("No se ha podido añadir el usuario");
