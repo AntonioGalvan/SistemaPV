@@ -9,10 +9,32 @@
 <div>
     <h4>Gerente</h4>
     <hr />
-    <dl class="row">
-    </dl>
+    <div class="col-md-4">
+        <dl class="row">
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.User.FullName)
+            </dt>
+
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.User.FullName)
+            </dd>
+
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.User.Email)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.User.Email)
+            </dd>
+
+            <dt class="col-sm-6">
+                @Html.DisplayNameFor(model => model.User.Area)
+            </dt>
+            <dd class="col-sm-6">
+                @Html.DisplayFor(model => model.User.Area)
+            </dd>
+        </dl>
+    </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
     <a asp-action="Index" class="button"><i class="bi bi-arrow-return-left"></i></a>
 </div>

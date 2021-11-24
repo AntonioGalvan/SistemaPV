@@ -1,33 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemaPV.Data;
 using SistemaPV.Data.Entities;
+using SistemaPV.Helpers;
+using SistemaPV.Models;
 
 namespace SistemaPV.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class CManagersController : Controller
     {
-        private readonly DataContext _context;
+        private readonly DataContext dataContext;
+        private readonly IUserHelper userHelper;
 
-        public CManagersController(DataContext context)
+        public CManagersController(DataContext context, IUserHelper userHelper)
         {
-            _context = context;
+            this.userHelper = userHelper; 
+            dataContext = context;
         }
 
-        // GET: CManagers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Managers.Include(s => s.User).ToListAsync());
+            return View(await dataContext.Managers.Include(s => s.User).ToListAsync());
         }
 
-        // GET: CManagers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,7 +36,8 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cManager = await _context.Managers
+            var cManager = await dataContext.Managers
+                .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cManager == null)
             {
@@ -45,29 +47,45 @@ namespace SistemaPV.Controllers
             return View(cManager);
         }
 
-        // GET: CManagers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: CManagers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CManager cManager)
+        public async Task<IActionResult> Create(addManagerViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cManager);
-                await _context.SaveChangesAsync();
+                var user = await userHelper.GetUserByIdAsync(model.User.Id);
+                if (user == null)
+                {
+                    user = new CUser
+                    {
+                        FirstName = model.User.FirstName,
+                        LastName = model.User.LastName,
+                        Email = model.User.Email,
+                        UserName = model.User.Email
+                    };
+                }
+                var result = await userHelper.AddUserAsync(user, "1234565487");
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("No se ha podido añadir el usuario");
+                }
+                await userHelper.AddUserToRoleAsync(user, "Manager");
+                var manager = new CManager
+                {
+                    Id = model.Id,
+                    User = await dataContext.Users.FindAsync(user.Id)
+                };
+                dataContext.Add(manager);
+                await dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cManager);
+            return View(model);
         }
 
-        // GET: CManagers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,7 +93,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cManager = await _context.Managers.FindAsync(id);
+            var cManager = await dataContext.Managers.FindAsync(id);
             if (cManager == null)
             {
                 return NotFound();
@@ -83,11 +101,7 @@ namespace SistemaPV.Controllers
             return View(cManager);
         }
 
-        // POST: CManagers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CManager cManager)
         {
             if (id != cManager.Id)
@@ -99,8 +113,8 @@ namespace SistemaPV.Controllers
             {
                 try
                 {
-                    _context.Update(cManager);
-                    await _context.SaveChangesAsync();
+                    dataContext.Update(cManager);
+                    await dataContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -118,7 +132,6 @@ namespace SistemaPV.Controllers
             return View(cManager);
         }
 
-        // GET: CManagers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,7 +139,7 @@ namespace SistemaPV.Controllers
                 return NotFound();
             }
 
-            var cManager = await _context.Managers
+            var cManager = await dataContext.Managers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cManager == null)
             {
@@ -136,20 +149,19 @@ namespace SistemaPV.Controllers
             return View(cManager);
         }
 
-        // POST: CManagers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cManager = await _context.Managers.FindAsync(id);
-            _context.Managers.Remove(cManager);
-            await _context.SaveChangesAsync();
+            var cManager = await dataContext.Managers.FindAsync(id);
+            dataContext.Managers.Remove(cManager);
+            await dataContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CManagerExists(int id)
         {
-            return _context.Managers.Any(e => e.Id == id);
+            return dataContext.Managers.Any(e => e.Id == id);
         }
     }
 }
