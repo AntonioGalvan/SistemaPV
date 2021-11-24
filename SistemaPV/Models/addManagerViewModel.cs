@@ -9,6 +9,8 @@ namespace SistemaPV.Models
 {
     public class addManagerViewModel:CManager
     {
-
+        [Display(Name ="Contraseña")]
+        [Required(ErrorMessage = "El {0} es requerido.")]
+        public string Pass { get; set; }
     }
 }
